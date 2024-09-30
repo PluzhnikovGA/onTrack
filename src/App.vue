@@ -1,6 +1,18 @@
-<script setup>
-import { CheckCircleIcon } from '@heroicons/vue/24/solid'
-import { ClockIcon, ListBulletIcon, ChartBarIcon } from '@heroicons/vue/24/outline'
+<script setup lang="ts">
+import { DefineComponent } from 'vue';
+import { CheckCircleIcon } from '@heroicons/vue/24/solid';
+import { ClockIcon, ListBulletIcon, ChartBarIcon } from '@heroicons/vue/24/outline';
+
+type TNavItem = {
+  page: string;
+  icon: DefineComponent;
+};
+
+const navItems: TNavItem[] = [
+  { page: 'timeline', icon: ClockIcon },
+  { page: 'activities', icon: ListBulletIcon },
+  { page: 'progress', icon: ChartBarIcon },
+];
 </script>
 
 <template>
@@ -43,19 +55,10 @@ import { ClockIcon, ListBulletIcon, ChartBarIcon } from '@heroicons/vue/24/outli
 
   <nav class="sticky bottom-0 z-10 bg-white">
     <ul class="flex items-center justify-around border-t">
-      <li class="flex-1">
-        <a href="#timeline" class="flex flex-col items-center p-2 text-xs capitalize">
-          <ClockIcon class="h-6 w-6" /> timeline
-        </a>
-      </li>
-      <li class="flex-1">
-        <a href="#activities" class="flex flex-col items-center p-2 text-xs capitalize">
-          <ListBulletIcon class="h-6 w-6" /> activities
-        </a>
-      </li>
-      <li class="flex-1">
-        <a href="#progress" class="flex flex-col items-center p-2 text-xs capitalize">
-          <ChartBarIcon class="h-6 w-6" /> progress
+      <li v-for="item in navItems" :key="item.page" class="flex-1">
+        <a :href="`#${item.page}`" class="flex flex-col items-center p-2 text-xs capitalize">
+          <component :is="item.icon" class="h-6 w-6" />
+          {{ item.page }}
         </a>
       </li>
     </ul>
