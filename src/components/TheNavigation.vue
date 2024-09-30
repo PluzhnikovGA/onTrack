@@ -1,29 +1,34 @@
 <script setup lang="ts">
-import { DefineComponent } from 'vue';
-
+import { ref } from 'vue';
+import NavItem from './NavItem.vue';
+import type { TNavItem } from '../types/TNavItem.types.ts';
 import { ClockIcon, ListBulletIcon, ChartBarIcon } from '@heroicons/vue/24/outline';
-
-type TNavItem = {
-  page: string;
-  icon: DefineComponent;
-};
 
 const navItems: TNavItem[] = [
   { page: 'timeline', icon: ClockIcon },
   { page: 'activities', icon: ListBulletIcon },
   { page: 'progress', icon: ChartBarIcon },
 ];
+
+const currentPage = ref<string>('timeline');
+
+function handleNavClick(page: string) {
+  currentPage.value = page;
+}
 </script>
 
 <template>
   <nav class="sticky bottom-0 z-10 bg-white">
     <ul class="flex items-center justify-around border-t">
-      <li v-for="item in navItems" :key="item.page" class="flex-1">
-        <a :href="`#${item.page}`" class="flex flex-col items-center p-2 text-xs capitalize">
-          <component :is="item.icon" class="h-6 w-6" />
-          {{ item.page }}
-        </a>
-      </li>
+      <NavItem
+        v-for="item in navItems"
+        :class="{ 'bg-gray-200 pointer-events-none': currentPage === item.page }"
+        @click="handleNavClick(item.page)"
+        :key="item.page"
+        :href="`#${item.page}`"
+        :page="item.page"
+        :icon="item.icon"
+      />
     </ul>
   </nav>
 </template>
