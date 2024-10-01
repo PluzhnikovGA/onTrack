@@ -19,18 +19,18 @@ function normalizePageHash(): string {
   return PAGE_TIMELINE;
 }
 
-function handleNavClick(page: string): void {
+function goTo(page: string): void {
   currentPage.value = page;
 }
 </script>
 
 <template>
-  <TheHeader />
+  <TheHeader @go-to-timeline="goTo(PAGE_TIMELINE)" @go-to-progress="goTo(PAGE_PROGRESS)" />
   <main class="flex flex-col flex-grow">
     <TheTimeline v-show="currentPage === PAGE_TIMELINE" />
     <TheActivities v-show="currentPage === PAGE_ACTIVITIES" />
     <TheProgress v-show="currentPage === PAGE_PROGRESS" />
   </main>
 
-  <TheNavigation :currentPage="currentPage" :navItems="navItems" @navigate="handleNavClick" />
+  <TheNavigation :current-page="currentPage" :nav-items="navItems" @navigate="goTo" />
 </template>

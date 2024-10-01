@@ -1,10 +1,11 @@
 <script setup>
+import { PAGE_PROGRESS } from '@/constants/page.constants';
 import { CheckCircleIcon } from '@heroicons/vue/24/solid';
 </script>
 
 <template>
-  <a href="#" class="text-sm">
-    <div v-if="true" class="flex items-center gap-1">
+  <a :href="`#${PAGE_PROGRESS}`" class="text-sm">
+    <div v-if="false" class="flex items-center gap-1">
       Day complete! <CheckCircleIcon class="h-7 text-green-500" />
     </div>
     <div v-else class="flex items-center gap-1">
