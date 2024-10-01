@@ -627,7 +627,7 @@
   dependencies:
     "@vue/shared" "3.5.10"
 
-"@vue/runtime-core@3.5.10":
+"@vue/runtime-core@3.5.10", "@vue/runtime-core@^3.5.10":
   version "3.5.10"
   resolved "https://registry.yarnpkg.com/@vue/runtime-core/-/runtime-core-3.5.10.tgz#e902eb2640fa6ab4cc4589af263818a898812668"
   integrity sha512-9Q86I5Qq3swSkFfzrZ+iqEy7Vla325M7S7xc1NwKnRm/qoi1Dauz0rT6mTMmscqx4qz0EDJ1wjB+A36k7rl8mA==

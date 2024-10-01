@@ -1,29 +1,18 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import type { TNavItem } from '@/types/TNavItem.types';
 import NavItem from './NavItem.vue';
-import type { TNavItem } from '@/types/TNavItem.types.ts';
-import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS } from '@/constants/page.constants';
-import { ClockIcon, ListBulletIcon, ChartBarIcon } from '@heroicons/vue/24/outline';
 
-const navItems: TNavItem[] = [
-  { page: PAGE_TIMELINE, icon: ClockIcon },
-  { page: PAGE_ACTIVITIES, icon: ListBulletIcon },
-  { page: PAGE_PROGRESS, icon: ChartBarIcon },
-];
+defineProps<{
+  currentPage: string;
+  navItems: TNavItem[];
+}>();
 
-const currentPage = ref<string>(normalizePageHash());
+const emit = defineEmits<{
+  (e: 'navigate', page: string): void;
+}>();
 
 function handleNavClick(page: string): void {
-  currentPage.value = page;
-}
-
-function normalizePageHash(): string {
-  const hash = window.location.hash.slice(1);
-
-  if (navItems.some((item) => item.page === hash)) return hash;
-
-  window.location.hash = PAGE_TIMELINE;
-  return PAGE_TIMELINE;
+  emit('navigate', page);
 }
 </script>
 
