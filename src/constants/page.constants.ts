@@ -1,4 +1,4 @@
-import type { TNavItem } from '@/types/TNavItem.types';
+import type { TNavItem } from '@/types/NavItem.types';
 import { ClockIcon, ListBulletIcon, ChartBarIcon } from '@heroicons/vue/24/outline';
 
 export const PAGE_TIMELINE = 'timeline';

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TNavItem } from '@/types/TNavItem.types';
+import type { TNavItem } from '@/types/NavItem.types';
 import NavItem from './NavItem.vue';
 
 defineProps<{

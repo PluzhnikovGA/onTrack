@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import BaseButton from '@/components/BaseButton.vue';
-import type { TOption } from '@/types/TBaseSelector.types';
+import type { TOption } from '@/types/BaseSelector.types';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
 
 defineProps<{

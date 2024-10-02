@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { TTimelineItem } from '@/types/TimelineItem.types';
 import BaseSelect from '@/components/BaseSelect.vue';
-import type { TOption } from '@/types/TBaseSelector.types';
+import type { TOption } from '@/types/BaseSelector.types';
 
 const props = defineProps<{
   timelineItem: TTimelineItem;

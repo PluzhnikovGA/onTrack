@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { defineProps, useAttrs, defineEmits } from 'vue';
 
-import type { TNavItem } from '../types/TNavItem.types.ts';
+import type { TNavItem } from '../types/NavItem.types.js';
 
 const props = defineProps<TNavItem>();
 const attrs = useAttrs();
