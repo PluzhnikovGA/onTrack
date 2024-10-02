@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import TimelineItem from '@/components/TimelineItem.vue';
-import type { TTimelineItem } from '@/types/TTimelineItem.types';
+import type { TTimelineItem } from '@/types/TimelineItem.types';
 
 defineProps<{
   timelineItems: TTimelineItem[];

@@ -13,7 +13,7 @@ import TheTimeline from '@/pages/TheTimeline.vue';
 import { ref } from 'vue';
 import { normalizePageHash } from '@/utils/normalizePageHash';
 import { generateTimelineItems } from '@/utils/generateTimelineItems';
-import type { TTimelineItem } from './types/TTimelineItem.types';
+import type { TTimelineItem } from './types/TimelineItem.types';
 
 const currentPage = ref<string>(normalizePageHash());
 const timelineItems: TTimelineItem[] = generateTimelineItems();
