@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import type { TTimelineItem } from '@/types/TimelineItem.types';
 import BaseSelect from '@/components/BaseSelect.vue';
 import type { TOption } from '@/types/BaseSelector.types';
@@ -20,12 +21,17 @@ const options: TOption[] = [
   { value: 3, label: 'Training' },
 ];
 
-const selectedActivityId: number = 2;
+const selectedActivityId = ref<number | null>(null);
 </script>
 
 <template>
   <li class="border-grey-200 relative flex flex-col gap-2 border-t px-4 py-10">
     <a href="#" :class="hourLinkClasses"> {{ timelineItem.hour }}:00 </a>
-    <BaseSelect :selected="selectedActivityId" :options="options" :placeholder="`Rest`" />
+    <BaseSelect
+      :selected="selectedActivityId"
+      :options="options"
+      :placeholder="`Rest`"
+      @select="selectedActivityId = $event"
+    />
   </li>
 </template>
