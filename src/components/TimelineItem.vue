@@ -24,7 +24,7 @@ const selectedActivityId: number = 2;
 </script>
 
 <template>
-  <li class="relative flex flex-col gap-2 border-t border-grey-200 py-10 px-4">
+  <li class="border-grey-200 relative flex flex-col gap-2 border-t px-4 py-10">
     <a href="#" :class="hourLinkClasses"> {{ timelineItem.hour }}:00 </a>
     <BaseSelect :selected="selectedActivityId" :options="options" :placeholder="`Rest`" />
   </li>

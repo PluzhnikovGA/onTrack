@@ -21,7 +21,7 @@ function handleNavClick(page: string): void {
     <ul class="flex items-center justify-around border-t">
       <NavItem
         v-for="item in navItems"
-        :class="{ 'bg-gray-200 pointer-events-none': currentPage === item.page }"
+        :class="{ 'pointer-events-none bg-gray-200': currentPage === item.page }"
         @click="handleNavClick(item.page)"
         :key="item.page"
         :href="`#${item.page}`"
