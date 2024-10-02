@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import TimelineItem from '@/components/TimelineItem.vue';
 import type { TTimelineItem } from '@/types/TTimelineItem.types';
-import { generateTimelineItems } from '@/utils/generateTimelineItems';
 
-const timelineItems: TTimelineItem[] = generateTimelineItems();
+defineProps<{
+  timelineItems: TTimelineItem[];
+}>();
 </script>
 
 <template>
