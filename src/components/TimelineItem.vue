@@ -7,13 +7,8 @@ import type { TOption } from '@/types/BaseSelector.types';
 
 defineProps<{
   timelineItem: TTimelineItem;
+  activitySelectOptions: TOption[];
 }>();
-
-const options: TOption[] = [
-  { value: 1, label: 'Coding' },
-  { value: 2, label: 'Reading' },
-  { value: 3, label: 'Training' },
-];
 
 const selectedActivityId = ref<number | null>(null);
 </script>
@@ -23,7 +18,7 @@ const selectedActivityId = ref<number | null>(null);
     <TimelineHour :hour="timelineItem.hour" />
     <BaseSelect
       :selected="selectedActivityId"
-      :options="options"
+      :options="activitySelectOptions"
       :placeholder="`Rest`"
       @select="selectedActivityId = $event"
     />
