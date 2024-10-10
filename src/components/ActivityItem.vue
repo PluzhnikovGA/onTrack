@@ -10,13 +10,21 @@ defineProps<{
   activity: string;
 }>();
 
+const emit = defineEmits<{
+  (e: 'delete'): void;
+}>();
+
+function handleDelete(): void {
+  emit('delete');
+}
+
 const secondsToComplete = ref<number | null>(null);
 </script>
 
 <template>
   <li class="flex flex-col gap-2 p-4">
     <div class="flex items-center gap-2">
-      <BaseButton :color="ButtonColor.DANGER">
+      <BaseButton :color="ButtonColor.DANGER" @click="handleDelete">
         <TrashIcon class="h-8" />
       </BaseButton>
       <span class="truncate text-xl">{{ activity }}</span>

@@ -20,12 +20,16 @@ import type { TOption } from './types/BaseSelector.types';
 const currentPage = ref<string>(normalizePageHash());
 const timelineItems: TTimelineItem[] = generateTimelineItems();
 
-const activities: string[] = ['Coding', 'Reading', 'Training'];
+const activities = ref<string[]>(['Coding', 'Reading', 'Training']);
 
-const activitySelectOptions: TOption[] = generateActivitySelectOptions(activities);
+const activitySelectOptions: TOption[] = generateActivitySelectOptions(activities.value);
 
 function goTo(page: string): void {
   currentPage.value = page;
+}
+
+function deleteActivity(activity: string): void {
+  activities.value.splice(activities.value.indexOf(activity), 1);
 }
 </script>
 
@@ -37,7 +41,11 @@ function goTo(page: string): void {
       :timeline-items="timelineItems"
       :activity-select-options="activitySelectOptions"
     />
-    <TheActivities v-show="currentPage === PAGE_ACTIVITIES" :activities="activities" />
+    <TheActivities
+      v-show="currentPage === PAGE_ACTIVITIES"
+      :activities="activities"
+      @delete-activity="deleteActivity"
+    />
     <TheProgress v-show="currentPage === PAGE_PROGRESS" />
   </main>
 
