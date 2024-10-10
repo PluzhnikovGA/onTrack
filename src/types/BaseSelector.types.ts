@@ -1,4 +1,4 @@
 export type TOption = {
-  value: number;
+  value: string;
   label: string;
 };

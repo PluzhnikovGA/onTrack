@@ -10,7 +10,7 @@ defineProps<{
   activitySelectOptions: TOption[];
 }>();
 
-const selectedActivityId = ref<number | null>(null);
+const selectedActivityId = ref<string | null>(null);
 </script>
 
 <template>

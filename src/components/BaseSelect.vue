@@ -5,18 +5,18 @@ import type { TOption } from '@/types/BaseSelector.types';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
 
 defineProps<{
-  selected: number | null;
+  selected: string | null;
   options: TOption[];
   placeholder: string;
 }>();
 
 const emit = defineEmits<{
-  (e: 'select', value: number | null): void;
+  (e: 'select', value: string | null): void;
 }>();
 
 function changeValue(event: Event): void {
   const target = event.target as HTMLSelectElement;
-  emit('select', Number(target.value));
+  emit('select', target.value);
 }
 
 function defaultValue(): void {

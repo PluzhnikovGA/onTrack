@@ -5,20 +5,21 @@ import { TrashIcon } from '@heroicons/vue/24/outline';
 import { ref } from 'vue';
 import { PERIOD_SELECT_OPTIONS } from '@/constants/select.constants';
 import { ButtonColor } from '@/types/BaseButton.types';
+import type { TActivity } from '@/types/Activities.types';
 
-defineProps<{
-  activity: string;
+const props = defineProps<{
+  activity: TActivity;
 }>();
 
 const emit = defineEmits<{
-  (e: 'delete'): void;
+  (e: 'delete', id: string): void;
 }>();
 
 function handleDelete(): void {
-  emit('delete');
+  emit('delete', props.activity.id);
 }
 
-const secondsToComplete = ref<number | null>(null);
+const secondsToComplete = ref<string | null>(null);
 </script>
 
 <template>
@@ -27,7 +28,7 @@ const secondsToComplete = ref<number | null>(null);
       <BaseButton :color="ButtonColor.DANGER" @click="handleDelete">
         <TrashIcon class="h-8" />
       </BaseButton>
-      <span class="truncate text-xl">{{ activity }}</span>
+      <span class="truncate text-xl">{{ activity.name }}</span>
     </div>
     <div>
       <BaseSelect

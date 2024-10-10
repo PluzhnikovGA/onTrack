@@ -15,12 +15,14 @@ import { normalizePageHash } from '@/utils/normalizePageHash';
 import { generateTimelineItems } from '@/utils/generateTimelineItems';
 import type { TTimelineItem } from '@/types/TimelineItem.types';
 import { generateActivitySelectOptions } from '@/utils/generateActivitySelectOptions';
-import type { TOption } from './types/BaseSelector.types';
+import type { TOption } from '@/types/BaseSelector.types';
+import { generateActivitiesList, id } from '@/utils/generateActivitiesList';
+import type { TActivity } from './types/Activities.types';
 
 const currentPage = ref<string>(normalizePageHash());
 const timelineItems: TTimelineItem[] = generateTimelineItems();
 
-const activities = ref<string[]>(['Coding', 'Reading', 'Training']);
+const activities = ref<TActivity[]>(generateActivitiesList());
 
 const activitySelectOptions: TOption[] = generateActivitySelectOptions(activities.value);
 
@@ -28,12 +30,15 @@ function goTo(page: string): void {
   currentPage.value = page;
 }
 
-function deleteActivity(activity: string): void {
-  activities.value.splice(activities.value.indexOf(activity), 1);
+function deleteActivity(activityId: string): void {
+  const index = activities.value.findIndex((activity) => activity.id === activityId);
+  if (index !== -1) {
+    activities.value.splice(index, 1);
+  }
 }
 
 function createActivity(newActivity: string): void {
-  activities.value.push(newActivity);
+  activities.value.push({ id: id(), name: newActivity, secondsToComplete: 0 });
 }
 </script>
 

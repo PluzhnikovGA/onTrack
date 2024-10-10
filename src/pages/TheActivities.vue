@@ -2,9 +2,10 @@
 import ActivityItem from '@/components/ActivityItem.vue';
 import TheActivitiesEmptyState from '@/components/TheActivitiesEmptyState.vue';
 import TheActivityForm from '@/components/TheActivityForm.vue';
+import type { TActivity } from '@/types/Activities.types';
 
 defineProps<{
-  activities: string[];
+  activities: TActivity[];
 }>();
 
 const emit = defineEmits<{
@@ -12,8 +13,8 @@ const emit = defineEmits<{
   (e: 'createActivity', newActivity: string): void;
 }>();
 
-function deleteActivity(activity: string): void {
-  emit('deleteActivity', activity);
+function deleteActivity(activity: TActivity): void {
+  emit('deleteActivity', activity.id);
 }
 
 function createActivity(event: string): void {
@@ -29,7 +30,7 @@ function createActivity(event: string): void {
     <ul v-if="activities.length > 0" class="grow divide-y">
       <ActivityItem
         v-for="activity in activities"
-        :key="activity"
+        :key="activity.id"
         :activity="activity"
         @delete="deleteActivity(activity)"
       />
