@@ -3,9 +3,9 @@ import BaseButton from '@/components/BaseButton.vue';
 import BaseSelect from '@/components/BaseSelect.vue';
 import { TrashIcon } from '@heroicons/vue/24/outline';
 import { ref } from 'vue';
-import { PERIOD_SELECT_OPTIONS } from '@/constants/select.constants';
 import { ButtonColor } from '@/types/BaseButton.types';
 import type { TActivity } from '@/types/Activities.types';
+import { PERIOD_SELECT_OPTIONS } from '@/constants/page.constants';
 
 const props = defineProps<{
   activity: TActivity;
@@ -19,7 +19,18 @@ function handleDelete(): void {
   emit('delete', props.activity.id);
 }
 
-const secondsToComplete = ref<string | null>(null);
+const secondsToComplete = ref<number | null>(null);
+
+function updateSecondsToComplete(event: string | number | null): number | null {
+  switch (true) {
+    case event === null:
+      return null;
+    case isNaN(Number(event)):
+      throw new Error('Invalid value received');
+    default:
+      return Number(event);
+  }
+}
 </script>
 
 <template>
@@ -33,10 +44,10 @@ const secondsToComplete = ref<string | null>(null);
     <div>
       <BaseSelect
         class="font-mono"
-        placeholder="h:mm"
+        :placeholder="'h:mm'"
         :options="PERIOD_SELECT_OPTIONS"
         :selected="secondsToComplete"
-        @select="secondsToComplete = $event"
+        @select="secondsToComplete = updateSecondsToComplete($event)"
       />
     </div>
   </li>

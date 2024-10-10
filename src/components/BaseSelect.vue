@@ -5,13 +5,13 @@ import type { TOption } from '@/types/BaseSelector.types';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
 
 defineProps<{
-  selected: string | null;
+  selected: string | number | null;
   options: TOption[];
   placeholder: string;
 }>();
 
 const emit = defineEmits<{
-  (e: 'select', value: string | null): void;
+  (e: 'select', value: string | number | null): void;
 }>();
 
 function changeValue(event: Event): void {

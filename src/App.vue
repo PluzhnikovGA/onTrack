@@ -10,7 +10,7 @@ import {
 import TheActivities from '@/pages/TheActivities.vue';
 import TheProgress from '@/pages/TheProgress.vue';
 import TheTimeline from '@/pages/TheTimeline.vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { normalizePageHash } from '@/utils/normalizePageHash';
 import { generateTimelineItems } from '@/utils/generateTimelineItems';
 import type { TTimelineItem } from '@/types/TimelineItem.types';
@@ -20,17 +20,24 @@ import { generateActivitiesList, id } from '@/utils/generateActivitiesList';
 import type { TActivity } from './types/Activities.types';
 
 const currentPage = ref<string>(normalizePageHash());
-const timelineItems: TTimelineItem[] = generateTimelineItems();
+const timelineItems = ref<TTimelineItem[]>(generateTimelineItems());
 
 const activities = ref<TActivity[]>(generateActivitiesList());
 
-const activitySelectOptions: TOption[] = generateActivitySelectOptions(activities.value);
+const activitySelectOptions = computed((): TOption[] =>
+  generateActivitySelectOptions(activities.value),
+);
 
 function goTo(page: string): void {
   currentPage.value = page;
 }
 
 function deleteActivity(activityId: string): void {
+  timelineItems.value.forEach((timelineItem) => {
+    if (timelineItem.activityId === activityId) {
+      timelineItem.activityId = null;
+    }
+  });
   const index = activities.value.findIndex((activity) => activity.id === activityId);
   if (index !== -1) {
     activities.value.splice(index, 1);
@@ -39,6 +46,10 @@ function deleteActivity(activityId: string): void {
 
 function createActivity(newActivity: string): void {
   activities.value.push({ id: id(), name: newActivity, secondsToComplete: 0 });
+}
+
+function setTimelineItemActivity(activity: TActivity, timelineItem: TTimelineItem): void {
+  timelineItem.activityId = activity.id;
 }
 </script>
 
@@ -49,6 +60,8 @@ function createActivity(newActivity: string): void {
       v-show="currentPage === PAGE_TIMELINE"
       :timeline-items="timelineItems"
       :activity-select-options="activitySelectOptions"
+      :activities="activities"
+      @set-timeline-item-activity="setTimelineItemActivity"
     />
     <TheActivities
       v-show="currentPage === PAGE_ACTIVITIES"
