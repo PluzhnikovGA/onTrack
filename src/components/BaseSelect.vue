@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import BaseButton from '@/components/BaseButton.vue';
+import { ButtonColor } from '@/types/BaseButton.types';
 import type { TOption } from '@/types/BaseSelector.types';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
 
@@ -25,7 +26,7 @@ function defaultValue(): void {
 
 <template>
   <div class="flex gap-2">
-    <BaseButton @click="defaultValue">
+    <BaseButton @click="defaultValue" :color="ButtonColor.NEUTRAL">
       <XMarkIcon class="h-8" />
     </BaseButton>
     <select class="w-full truncate rounded bg-gray-100 px-2 py-1 text-2xl" @change="changeValue">

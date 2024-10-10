@@ -6,7 +6,7 @@ const props = withDefaults(
     color?: ButtonColor;
   }>(),
   {
-    color: ButtonColor.NEUTRAL,
+    color: ButtonColor.PRIMARY,
   },
 );
 </script>

@@ -31,6 +31,10 @@ function goTo(page: string): void {
 function deleteActivity(activity: string): void {
   activities.value.splice(activities.value.indexOf(activity), 1);
 }
+
+function createActivity(newActivity: string): void {
+  activities.value.push(newActivity);
+}
 </script>
 
 <template>
@@ -45,6 +49,7 @@ function deleteActivity(activity: string): void {
       v-show="currentPage === PAGE_ACTIVITIES"
       :activities="activities"
       @delete-activity="deleteActivity"
+      @create-activity="createActivity"
     />
     <TheProgress v-show="currentPage === PAGE_PROGRESS" />
   </main>
