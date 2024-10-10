@@ -48,8 +48,13 @@ function createActivity(newActivity: string): void {
   activities.value.push({ id: id(), name: newActivity, secondsToComplete: 0 });
 }
 
-function setTimelineItemActivity(activity: TActivity, timelineItem: TTimelineItem): void {
-  timelineItem.activityId = activity.id;
+function setTimelineItemActivity(activity: TActivity | null, timelineItem: TTimelineItem): void {
+  console.log();
+  timelineItem.activityId = !!activity ? activity.id : null;
+}
+
+function setSecondsToCompleted(seconds: number | null, activity: TActivity): void {
+  activity.secondsToComplete = !!seconds ? seconds : 0;
 }
 </script>
 
@@ -68,6 +73,7 @@ function setTimelineItemActivity(activity: TActivity, timelineItem: TTimelineIte
       :activities="activities"
       @delete-activity="deleteActivity"
       @create-activity="createActivity"
+      @set-seconds-to-completed="setSecondsToCompleted"
     />
     <TheProgress v-show="currentPage === PAGE_PROGRESS" />
   </main>

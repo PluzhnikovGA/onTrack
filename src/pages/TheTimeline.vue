@@ -11,10 +11,10 @@ defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: 'setTimelineItemActivity', activity: TActivity, timelineItem: TTimelineItem): void;
+  (e: 'setTimelineItemActivity', activity: TActivity | null, timelineItem: TTimelineItem): void;
 }>();
 
-function setTimelineItemActivity(activity: TActivity, timelineItem: TTimelineItem): void {
+function setTimelineItemActivity(activity: TActivity | null, timelineItem: TTimelineItem): void {
   emit('setTimelineItemActivity', activity, timelineItem);
 }
 </script>

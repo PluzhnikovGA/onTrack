@@ -11,6 +11,7 @@ defineProps<{
 const emit = defineEmits<{
   (e: 'deleteActivity', activity: string): void;
   (e: 'createActivity', newActivity: string): void;
+  (e: 'setSecondsToCompleted', seconds: number | null, activity: TActivity): void;
 }>();
 
 function deleteActivity(activity: TActivity): void {
@@ -23,6 +24,10 @@ function createActivity(event: string): void {
     emit('createActivity', value);
   }
 }
+
+function setSecondsToCompleted(seconds: number | null, activity: TActivity): void {
+  emit('setSecondsToCompleted', seconds, activity);
+}
 </script>
 
 <template>
@@ -33,6 +38,7 @@ function createActivity(event: string): void {
         :key="activity.id"
         :activity="activity"
         @delete="deleteActivity(activity)"
+        @set-seconds-to-completed="setSecondsToCompleted($event, activity)"
       />
     </ul>
     <TheActivitiesEmptyState v-else />

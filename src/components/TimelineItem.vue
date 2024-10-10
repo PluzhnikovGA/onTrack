@@ -4,7 +4,6 @@ import BaseSelect from '@/components/BaseSelect.vue';
 import TimelineHour from '@/components/TimelineHour.vue';
 import type { TOption } from '@/types/BaseSelector.types';
 import type { TActivity } from '@/types/Activities.types';
-import { ref, watch } from 'vue';
 
 const props = defineProps<{
   timelineItem: TTimelineItem;
@@ -13,39 +12,17 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: 'selectActivity', activity: TActivity): void;
+  (e: 'selectActivity', activity: TActivity | null): void;
 }>();
 
-const selectedActivity = ref<string | null>(props.timelineItem.activityId);
-
 function selectActivity(id: string | number | null): void {
-  const value = (): string | null => {
-    switch (true) {
-      case id === null:
-        return null;
-      case isNaN(Number(id)) && typeof id === 'string':
-        return id;
-      default:
-        return null;
-    }
-  };
-
-  const activity: TActivity | undefined = props.activities.find(
-    (activity) => activity.id === value(),
-  );
-
-  if (activity === undefined) return;
-
-  emit('selectActivity', activity);
+  if (id === null || (typeof id === 'string' && isNaN(Number(id)))) {
+    const activity = props.activities.find((activity) => activity.id === id);
+    emit('selectActivity', activity || null);
+  } else {
+    throw new Error('Invalid value received');
+  }
 }
-
-watch(
-  () => props.timelineItem.activityId,
-  (newActivityId) => {
-    selectedActivity.value = newActivityId;
-  },
-  { immediate: true },
-);
 </script>
 
 <template>
@@ -54,7 +31,7 @@ watch(
     <BaseSelect
       :placeholder="`Rest`"
       :options="activitySelectOptions"
-      :selected="selectedActivity"
+      :selected="timelineItem.activityId"
       @select="selectActivity($event)"
     />
   </li>

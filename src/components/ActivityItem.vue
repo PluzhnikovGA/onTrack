@@ -2,7 +2,6 @@
 import BaseButton from '@/components/BaseButton.vue';
 import BaseSelect from '@/components/BaseSelect.vue';
 import { TrashIcon } from '@heroicons/vue/24/outline';
-import { ref } from 'vue';
 import { ButtonColor } from '@/types/BaseButton.types';
 import type { TActivity } from '@/types/Activities.types';
 import { PERIOD_SELECT_OPTIONS } from '@/constants/page.constants';
@@ -13,22 +12,20 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'delete', id: string): void;
+  (e: 'setSecondsToCompleted', value: number | null): void;
 }>();
 
 function handleDelete(): void {
   emit('delete', props.activity.id);
 }
 
-const secondsToComplete = ref<number | null>(null);
-
-function updateSecondsToComplete(event: string | number | null): number | null {
-  switch (true) {
-    case event === null:
-      return null;
-    case isNaN(Number(event)):
-      throw new Error('Invalid value received');
-    default:
-      return Number(event);
+function setSecondsToCompleted(value: string | number | null): void {
+  if (value === null) {
+    emit('setSecondsToCompleted', null);
+  } else if (isNaN(Number(value))) {
+    throw new Error('Invalid value received');
+  } else {
+    emit('setSecondsToCompleted', Number(value));
   }
 }
 </script>
@@ -44,10 +41,10 @@ function updateSecondsToComplete(event: string | number | null): number | null {
     <div>
       <BaseSelect
         class="font-mono"
-        :placeholder="'h:mm'"
+        :placeholder="'hh:mm'"
         :options="PERIOD_SELECT_OPTIONS"
-        :selected="secondsToComplete"
-        @select="secondsToComplete = updateSecondsToComplete($event)"
+        :selected="!!activity.secondsToComplete ? activity.secondsToComplete : null"
+        @select="setSecondsToCompleted($event)"
       />
     </div>
   </li>
