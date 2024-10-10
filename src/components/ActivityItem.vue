@@ -4,6 +4,7 @@ import BaseSelect from '@/components/BaseSelect.vue';
 import { TrashIcon } from '@heroicons/vue/24/outline';
 import { ref } from 'vue';
 import { PERIOD_SELECT_OPTIONS } from '@/constants/select.constants';
+import { ButtonColor } from '@/types/BaseButton.types';
 
 defineProps<{
   activity: string;
@@ -15,7 +16,7 @@ const secondsToComplete = ref<number | null>(null);
 <template>
   <li class="flex flex-col gap-2 p-4">
     <div class="flex items-center gap-2">
-      <BaseButton>
+      <BaseButton :color="ButtonColor.DANGER">
         <TrashIcon class="h-8" />
       </BaseButton>
       <span class="truncate text-xl">{{ activity }}</span>
