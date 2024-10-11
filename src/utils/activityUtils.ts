@@ -1,3 +1,5 @@
+import type { Ref } from 'vue';
+
 import type { TActivity } from '@/types/activity.types';
 import type { TOption } from '@/types/base-components.types.ts';
 import type { TTimelineItem } from '@/types/timeline.types';
@@ -16,8 +18,8 @@ export function id(): string {
   return Date.now().toString(36) + Math.random().toString(36).substring(2);
 }
 
-export function generateActivitySelectOptions(activities: TActivity[]): TOption[] {
-  return activities.map((activity) => ({ value: activity.id, label: activity.name }));
+export function generateActivitySelectOptions(activities: Ref<TActivity[]>): TOption[] {
+  return activities.value.map((activity) => ({ value: activity.id, label: activity.name }));
 }
 
 export function getTotalActivitySeconds(

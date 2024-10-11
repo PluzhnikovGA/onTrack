@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, inject } from 'vue';
 
 import { getTotalActivitySeconds } from '@/utils/activityUtils';
 import { formatSeconds } from '@/utils/timeUtils';
@@ -9,8 +9,9 @@ import type { TTimelineItem } from '@/types/timeline.types';
 
 const props = defineProps<{
   activity: TActivity;
-  timelineItems: TTimelineItem[];
 }>();
+
+const timelineItems = inject<TTimelineItem[]>('timelineItems')!;
 
 const classes = computed(
   () =>
@@ -25,8 +26,7 @@ const seconds = computed(() => `${sign.value}${formatSeconds(secondsDiff.value)}
 
 const secondsDiff = computed(
   () =>
-    getTotalActivitySeconds(props.activity.id, props.timelineItems) -
-    props.activity.secondsToComplete,
+    getTotalActivitySeconds(props.activity.id, timelineItems) - props.activity.secondsToComplete,
 );
 
 const sign = computed(() => (secondsDiff.value >= 0 ? '+' : '-'));

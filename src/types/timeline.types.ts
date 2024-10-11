@@ -3,3 +3,13 @@ export type TTimelineItem = {
   activityId: string | null;
   activitySeconds: number;
 };
+
+export type TUpdateTimelineItemActivitySeconds = (
+  seconds: number,
+  timelineItem: TTimelineItem,
+) => void;
+
+export type TSetTimelineItemActivity = (
+  activityId: string | number | null,
+  timelineItem: TTimelineItem,
+) => void;

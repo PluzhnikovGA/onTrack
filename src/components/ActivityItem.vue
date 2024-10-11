@@ -1,38 +1,24 @@
 <script setup lang="ts">
 import { TrashIcon } from '@heroicons/vue/24/outline';
+import { inject } from 'vue';
 
 import ActivitySecondsToComplete from '@/components/ActivitySecondsToComplete.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import BaseSelect from '@/components/BaseSelect.vue';
 
-import type { TActivity } from '@/types/activity.types';
-import { ButtonColor } from '@/types/base-components.types.ts';
-import type { TTimelineItem } from '@/types/timeline.types';
-
-import { PERIOD_SELECT_OPTIONS } from '@/constants/page.constants';
+import type { TActivity, TDeleteActivity, TSetSecondsToCompleted } from '@/types/activity.types';
+import { ButtonColor, type TOption } from '@/types/base-components.types.ts';
 
 const props = defineProps<{
   activity: TActivity;
-  timelineItems: TTimelineItem[];
 }>();
 
-const emit = defineEmits<{
-  (e: 'delete', id: string): void;
-  (e: 'setSecondsToCompleted', value: number | null): void;
-}>();
+const periodSelectOptions = inject<TOption[]>('periodSelectOptions')!;
+const setSecondsToCompleted = inject<TSetSecondsToCompleted>('setSecondsToCompleted')!;
+const deleteActivity = inject<TDeleteActivity>('deleteActivity')!;
 
 function handleDelete(): void {
-  emit('delete', props.activity.id);
-}
-
-function setSecondsToCompleted(value: string | number | null): void {
-  if (value === null) {
-    emit('setSecondsToCompleted', null);
-  } else if (isNaN(Number(value))) {
-    throw new Error('Invalid value received');
-  } else {
-    emit('setSecondsToCompleted', Number(value));
-  }
+  deleteActivity(props.activity.id);
 }
 </script>
 
@@ -48,11 +34,11 @@ function setSecondsToCompleted(value: string | number | null): void {
       <BaseSelect
         class="font-mono grow"
         :placeholder="'hh:mm'"
-        :options="PERIOD_SELECT_OPTIONS"
+        :options="periodSelectOptions"
         :selected="!!activity.secondsToComplete ? activity.secondsToComplete : null"
-        @select="setSecondsToCompleted($event)"
+        @select="setSecondsToCompleted($event, activity)"
       />
-      <ActivitySecondsToComplete :activity="activity" :timelineItems="timelineItems" />
+      <ActivitySecondsToComplete :activity="activity" />
     </div>
   </li>
 </template>

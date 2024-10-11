@@ -1,39 +1,26 @@
 <script setup lang="ts">
+import { type ComputedRef, inject } from 'vue';
+
 import BaseSelect from '@/components/BaseSelect.vue';
 import TimelineHour from '@/components/TimelineHour.vue';
 import TimelineStopwatch from '@/components/TimelineStopwatch.vue';
 
-import type { TActivity } from '@/types/activity.types';
 import type { TOption } from '@/types/base-components.types.ts';
-import type { TTimelineItem } from '@/types/timeline.types';
+import type { TSetTimelineItemActivity, TTimelineItem } from '@/types/timeline.types';
 
 const props = defineProps<{
   timelineItem: TTimelineItem;
-  activitySelectOptions: TOption[];
-  activities: TActivity[];
 }>();
+
+const activitySelectOptions = inject<ComputedRef<TOption[]>>('activitySelectOptions');
+const setTimelineItemActivity = inject<TSetTimelineItemActivity>('setTimelineItemActivity')!;
 
 const emit = defineEmits<{
-  (e: 'selectActivity', activity: TActivity | null): void;
   (e: 'scrollToTimeHour', selectedHour: number): void;
-  (e: 'updateSeconds', value: number): void;
 }>();
-
-function selectActivity(id: string | number | null): void {
-  if (id === null || (typeof id === 'string' && isNaN(Number(id)))) {
-    const activity = props.activities.find((activity) => activity.id === id);
-    emit('selectActivity', activity || null);
-  } else {
-    throw new Error('Invalid value received');
-  }
-}
 
 function scrollToTimeHour() {
   emit('scrollToTimeHour', props.timelineItem.hour);
-}
-
-function updateSeconds(second: number) {
-  emit('updateSeconds', second);
 }
 </script>
 
@@ -42,14 +29,11 @@ function updateSeconds(second: number) {
     <TimelineHour :hour="timelineItem.hour" @click.prevent="scrollToTimeHour" />
     <BaseSelect
       :placeholder="`Rest`"
-      :options="activitySelectOptions"
+      :options="activitySelectOptions!"
       :selected="timelineItem.activityId"
-      @select="selectActivity($event)"
+      @select="setTimelineItemActivity($event, timelineItem)"
     />
-    <TimelineStopwatch
-      :seconds="timelineItem.activitySeconds"
-      :hour="timelineItem.hour"
-      @update-seconds="updateSeconds"
-    />
+
+    <TimelineStopwatch :timeline-item="timelineItem" />
   </li>
 </template>

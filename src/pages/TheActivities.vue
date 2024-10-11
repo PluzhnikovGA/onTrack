@@ -4,33 +4,10 @@ import TheActivitiesEmptyState from '@/components/TheActivitiesEmptyState.vue';
 import TheActivityForm from '@/components/TheActivityForm.vue';
 
 import type { TActivity } from '@/types/activity.types';
-import type { TTimelineItem } from '@/types/timeline.types';
 
 defineProps<{
   activities: TActivity[];
-  timelineItems: TTimelineItem[];
 }>();
-
-const emit = defineEmits<{
-  (e: 'deleteActivity', activity: string): void;
-  (e: 'createActivity', newActivity: string): void;
-  (e: 'setSecondsToCompleted', seconds: number | null, activity: TActivity): void;
-}>();
-
-function deleteActivity(activity: TActivity): void {
-  emit('deleteActivity', activity.id);
-}
-
-function createActivity(event: string): void {
-  const value = event.trim();
-  if (value.length > 0) {
-    emit('createActivity', value);
-  }
-}
-
-function setSecondsToCompleted(seconds: number | null, activity: TActivity): void {
-  emit('setSecondsToCompleted', seconds, activity);
-}
 </script>
 
 <template>
@@ -40,12 +17,9 @@ function setSecondsToCompleted(seconds: number | null, activity: TActivity): voi
         v-for="(activity, index) in activities"
         :key="`${activity.id}_${index}`"
         :activity="activity"
-        :timelineItems="timelineItems"
-        @delete="deleteActivity(activity)"
-        @set-seconds-to-completed="setSecondsToCompleted($event, activity)"
       />
     </ul>
     <TheActivitiesEmptyState v-else />
-    <TheActivityForm @submit="createActivity($event)" />
+    <TheActivityForm />
   </div>
 </template>

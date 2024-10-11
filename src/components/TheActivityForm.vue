@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import { PlusIcon } from '@heroicons/vue/24/outline';
-import { nextTick, ref } from 'vue';
+import { inject, nextTick, ref } from 'vue';
 
 import BaseButton from '@/components/BaseButton.vue';
 
+import type { TCreateActivity } from '@/types/activity.types';
+
 const activity = ref<string>('');
 
-const emit = defineEmits<{
-  (e: 'submit', activity: string): void;
-}>();
+const createActivity = inject<TCreateActivity>('createActivity')!;
 
-async function submit() {
-  if (activity.value.trim().length > 0) {
-    emit('submit', activity.value);
+async function handleSubmit() {
+  const newActivity = activity.value.trim();
+  if (newActivity.length > 0) {
+    createActivity(newActivity);
     activity.value = '';
     await nextTick();
     window.scrollTo(0, document.body.scrollHeight);
@@ -21,7 +22,10 @@ async function submit() {
 </script>
 
 <template>
-  <form @submit.prevent="submit" class="sticky bottom-[57px] flex gap-2 border-t bg-white p-4">
+  <form
+    @submit.prevent="handleSubmit"
+    class="sticky bottom-[57px] flex gap-2 border-t bg-white p-4"
+  >
     <input
       v-model="activity"
       type="text"

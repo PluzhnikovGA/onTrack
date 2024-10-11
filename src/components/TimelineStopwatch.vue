@@ -1,32 +1,32 @@
 <script setup lang="ts">
 import { ArrowPathIcon, PauseIcon, PlayIcon } from '@heroicons/vue/24/outline';
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 
 import BaseButton from '@/components/BaseButton.vue';
 
 import { formatSeconds } from '@/utils/timeUtils';
 
 import { ButtonColor } from '@/types/base-components.types.ts';
+import type { TTimelineItem, TUpdateTimelineItemActivitySeconds } from '@/types/timeline.types';
 
 import { MILLISECONDS_IN_SECONDS } from '@/constants/page.constants';
 
 const props = defineProps<{
-  seconds: number;
-  hour: number;
+  timelineItem: TTimelineItem;
 }>();
 
-const emit = defineEmits<{
-  (e: 'updateSeconds', value: number): void;
-}>();
+const updateTimelineItemActivitySeconds = inject<TUpdateTimelineItemActivitySeconds>(
+  'updateTimelineItemActivitySeconds',
+)!;
 
-const seconds = ref<number>(props.seconds);
+const seconds = ref<number>(props.timelineItem.activitySeconds);
 const isRunning = ref<number | null>(null);
 
-const isStartButtonDisabled = props.hour !== new Date().getHours();
+const isStartButtonDisabled = props.timelineItem.hour !== new Date().getHours();
 
 function start() {
   isRunning.value = setInterval(() => {
-    emit('updateSeconds', 1);
+    updateTimelineItemActivitySeconds(1, props.timelineItem);
     seconds.value++;
   }, MILLISECONDS_IN_SECONDS);
 }
@@ -37,15 +37,15 @@ function stop() {
 }
 
 function reset() {
-  emit('updateSeconds', -seconds.value);
   stop();
+  updateTimelineItemActivitySeconds(-seconds.value, props.timelineItem);
   seconds.value = 0;
 }
 </script>
 
 <template>
   <div class="flex w-full gap-2">
-    <BaseButton :color="ButtonColor.DANGER" @click="reset" :disabled="!seconds"
+    <BaseButton :color="ButtonColor.DANGER" @click="reset" :disabled="!timelineItem.activityId"
       ><ArrowPathIcon class="h-8"
     /></BaseButton>
     <div class="flex flex-grow items-center rounded bg-gray-100 px-2 font-mono text-3xl">
