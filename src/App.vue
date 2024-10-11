@@ -54,7 +54,6 @@ function createActivity(newActivity: string): void {
 }
 
 function setTimelineItemActivity(activity: TActivity | null, timelineItem: TTimelineItem): void {
-  console.log();
   timelineItem.activityId = !!activity ? activity.id : null;
 }
 
@@ -71,6 +70,7 @@ function setSecondsToCompleted(seconds: number | null, activity: TActivity): voi
       :timeline-items="timelineItems"
       :activity-select-options="activitySelectOptions"
       :activities="activities"
+      :current-page="currentPage"
       @set-timeline-item-activity="setTimelineItemActivity"
     />
     <TheActivities

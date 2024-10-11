@@ -1,7 +1,14 @@
+import TimelineItem from '@/components/TimelineItem.vue';
+
 import type { TActivity } from '@/types/activity.types';
 import type { TTimelineItem } from '@/types/timeline.types';
 
-import { HOURS_IN_DAY, SECONDS_IN_HOUR, SECONDS_IN_MINUTE } from '@/constants/page.constants';
+import {
+  HOURS_IN_DAY,
+  MIDNIGHT_HOUR,
+  SECONDS_IN_HOUR,
+  SECONDS_IN_MINUTE,
+} from '@/constants/page.constants';
 
 export function generateTimelineItems(activities: TActivity[]): TTimelineItem[] {
   return Array.from(
@@ -12,4 +19,17 @@ export function generateTimelineItems(activities: TActivity[]): TTimelineItem[] 
       activitySeconds: i % 4 === 0 ? 0 : (15 * SECONDS_IN_MINUTE * i) % SECONDS_IN_HOUR,
     }),
   );
+}
+
+export function scrollToTimelineHour(
+  hour: number,
+  timelineItemRefs: (InstanceType<typeof TimelineItem> | null)[],
+  isSmooth: boolean = true,
+) {
+  const options = { behavior: isSmooth ? 'smooth' : 'instant' };
+  if (hour === MIDNIGHT_HOUR) {
+    document.body.scrollIntoView();
+  } else {
+    timelineItemRefs[hour - 1]?.$el?.scrollIntoView(options);
+  }
 }

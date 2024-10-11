@@ -15,6 +15,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'selectActivity', activity: TActivity | null): void;
+  (e: 'scrollToTimeHour', selectedHour: number): void;
 }>();
 
 function selectActivity(id: string | number | null): void {
@@ -25,11 +26,15 @@ function selectActivity(id: string | number | null): void {
     throw new Error('Invalid value received');
   }
 }
+
+function scrollToTimeHour() {
+  emit('scrollToTimeHour', props.timelineItem.hour);
+}
 </script>
 
 <template>
   <li class="border-grey-200 relative flex flex-col gap-2 border-t px-4 py-10">
-    <TimelineHour :hour="timelineItem.hour" />
+    <TimelineHour :hour="timelineItem.hour" @click.prevent="scrollToTimeHour" />
     <BaseSelect
       :placeholder="`Rest`"
       :options="activitySelectOptions"
