@@ -11,6 +11,7 @@
     "^@/pages/(.*)$",
     "^@/components/(.*)$",
     "^@/assets/(.*)$",
+    "^@/router/(.*)$",
     "^@/utils/(.*)$",
     "^@/types/(.*)$",
     "^@/constants/(.*)$",

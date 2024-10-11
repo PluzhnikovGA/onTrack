@@ -3,21 +3,22 @@ import { nextTick, ref, watchPostEffect } from 'vue';
 
 import TimelineItem from '@/components/TimelineItem.vue';
 
+import { currentPage } from '@/router/router';
+
 import { scrollToTimelineHour } from '@/utils/timelineUtils';
 
 import type { TTimelineItem } from '@/types/timeline.types';
 
 import { PAGE_TIMELINE } from '@/constants/page.constants';
 
-const props = defineProps<{
+defineProps<{
   timelineItems: TTimelineItem[];
-  currentPage: string;
 }>();
 
 const timelineItemRefs = ref<(InstanceType<typeof TimelineItem> | null)[]>([]);
 
 watchPostEffect(async () => {
-  if (props.currentPage === PAGE_TIMELINE) {
+  if (currentPage.value === PAGE_TIMELINE) {
     await nextTick();
     scrollToTimelineHour(timelineItemRefs.value, null, false);
   }

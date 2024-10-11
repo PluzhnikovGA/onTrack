@@ -13,3 +13,7 @@ export type TSetTimelineItemActivity = (
   activityId: string | number | null,
   timelineItem: TTimelineItem,
 ) => void;
+
+export type TTimelineComponent = {
+  scrollToTimeHour: () => void;
+};
