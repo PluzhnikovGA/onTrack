@@ -1,23 +1,28 @@
 <script setup lang="ts">
-import TheHeader from './components/TheHeader.vue';
-import TheNavigation from '@/components/TheNavigation.vue';
-import {
-  PAGE_ACTIVITIES,
-  PAGE_PROGRESS,
-  PAGE_TIMELINE,
-  NAV_ITEMS,
-} from '@/constants/page.constants';
+import { computed, ref } from 'vue';
+
 import TheActivities from '@/pages/TheActivities.vue';
 import TheProgress from '@/pages/TheProgress.vue';
 import TheTimeline from '@/pages/TheTimeline.vue';
-import { computed, ref } from 'vue';
-import { normalizePageHash } from '@/utils/normalizePageHash';
-import { generateTimelineItems } from '@/utils/generateTimelineItems';
-import type { TTimelineItem } from '@/types/TimelineItem.types';
-import { generateActivitySelectOptions } from '@/utils/generateActivitySelectOptions';
-import type { TOption } from '@/types/BaseSelector.types';
-import { generateActivitiesList, id } from '@/utils/generateActivitiesList';
-import type { TActivity } from './types/Activities.types';
+
+import TheNavigation from '@/components/TheNavigation.vue';
+
+import { generateTimelineItems } from '@/utils/timelineUtils';
+
+import type { TTimelineItem } from '@/types/timeline.types';
+
+import {
+  NAV_ITEMS,
+  PAGE_ACTIVITIES,
+  PAGE_PROGRESS,
+  PAGE_TIMELINE,
+} from '@/constants/page.constants';
+
+import TheHeader from './components/TheHeader.vue';
+import type { TActivity } from './types/activity.types';
+import type { TOption } from './types/base-components.types.ts';
+import { generateActivitiesList, generateActivitySelectOptions, id } from './utils/activityUtils';
+import { normalizePageHash } from './utils/navUtils';
 
 const currentPage = ref<string>(normalizePageHash());
 const timelineItems = ref<TTimelineItem[]>(generateTimelineItems());

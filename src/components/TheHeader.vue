@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import TheLogo from './TheLogo.vue';
-import TheHeaderProgress from './TheHeaderProgress.vue';
+import TheHeaderProgress from '@/components/TheHeaderProgress.vue';
+import TheLogo from '@/components/TheLogo.vue';
+
 import { PAGE_PROGRESS, PAGE_TIMELINE } from '@/constants/page.constants';
 
 const emit = defineEmits<{

@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import { TrashIcon } from '@heroicons/vue/24/outline';
+
 import BaseButton from '@/components/BaseButton.vue';
 import BaseSelect from '@/components/BaseSelect.vue';
-import { TrashIcon } from '@heroicons/vue/24/outline';
-import { ButtonColor } from '@/types/BaseButton.types';
-import type { TActivity } from '@/types/Activities.types';
+
+import type { TActivity } from '@/types/activity.types';
+import { ButtonColor } from '@/types/base-components.types.ts';
+
 import { PERIOD_SELECT_OPTIONS } from '@/constants/page.constants';
 
 const props = defineProps<{

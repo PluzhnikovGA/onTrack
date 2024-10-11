@@ -1,4 +1,4 @@
-import { PAGE_TIMELINE, NAV_ITEMS } from '@/constants/page.constants';
+import { NAV_ITEMS, PAGE_TIMELINE } from '@/constants/page.constants';
 
 export function normalizePageHash(): string {
   const hash = window.location.hash.slice(1);

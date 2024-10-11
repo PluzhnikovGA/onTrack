@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { nextTick, ref } from 'vue';
-import BaseButton from '@/components/BaseButton.vue';
 import { PlusIcon } from '@heroicons/vue/24/outline';
+import { nextTick, ref } from 'vue';
+
+import BaseButton from '@/components/BaseButton.vue';
 
 const activity = ref<string>('');
 

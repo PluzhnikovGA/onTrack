@@ -1,5 +1,20 @@
-import { MINUTES_IN_HOUR, SECONDS_IN_MINUTE } from '@/constants/page.constants';
-import type { TOption } from '@/types/BaseSelector.types';
+import type { TOption } from '@/types/base-components.types.ts';
+
+import {
+  MILLISECONDS_IN_SECONDS,
+  MINUTES_IN_HOUR,
+  SECONDS_IN_MINUTE,
+} from '@/constants/page.constants';
+
+export function formatSeconds(seconds: number): string {
+  const date = new Date();
+
+  date.setTime(Math.abs(seconds) * MILLISECONDS_IN_SECONDS);
+
+  const utc = date.toUTCString();
+
+  return utc.substring(utc.indexOf(':') - 2, utc.indexOf(':') + 6);
+}
 
 export function generatePeriodSelectOptions(periodsInMinutes: number[]): TOption[] {
   return periodsInMinutes.map((periodInMinutes) => ({

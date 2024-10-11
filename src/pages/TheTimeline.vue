@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import TimelineItem from '@/components/TimelineItem.vue';
-import type { TActivity } from '@/types/Activities.types';
-import type { TOption } from '@/types/BaseSelector.types';
-import type { TTimelineItem } from '@/types/TimelineItem.types';
+
+import type { TActivity } from '@/types/activity.types';
+import type { TOption } from '@/types/base-components.types.ts';
+import type { TTimelineItem } from '@/types/timeline.types';
 
 defineProps<{
   timelineItems: TTimelineItem[];

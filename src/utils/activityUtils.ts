@@ -1,5 +1,7 @@
+import type { TActivity } from '@/types/activity.types';
+import type { TOption } from '@/types/base-components.types.ts';
+
 import { SECONDS_IN_HOUR } from '@/constants/page.constants';
-import type { TActivity } from '@/types/Activities.types';
 
 export function generateActivitiesList(): TActivity[] {
   return [
@@ -11,4 +13,8 @@ export function generateActivitiesList(): TActivity[] {
 
 export function id(): string {
   return Date.now().toString(36) + Math.random().toString(36).substring(2);
+}
+
+export function generateActivitySelectOptions(activities: TActivity[]): TOption[] {
+  return activities.map((activity) => ({ value: activity.id, label: activity.name }));
 }

@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import type { TTimelineItem } from '@/types/TimelineItem.types';
 import BaseSelect from '@/components/BaseSelect.vue';
 import TimelineHour from '@/components/TimelineHour.vue';
-import type { TOption } from '@/types/BaseSelector.types';
-import type { TActivity } from '@/types/Activities.types';
+import TimelineStopwatch from '@/components/TimelineStopwatch.vue';
+
+import type { TActivity } from '@/types/activity.types';
+import type { TOption } from '@/types/base-components.types.ts';
+import type { TTimelineItem } from '@/types/timeline.types';
 
 const props = defineProps<{
   timelineItem: TTimelineItem;
@@ -34,5 +36,6 @@ function selectActivity(id: string | number | null): void {
       :selected="timelineItem.activityId"
       @select="selectActivity($event)"
     />
+    <TimelineStopwatch :seconds="timelineItem.activitySeconds" />
   </li>
 </template>

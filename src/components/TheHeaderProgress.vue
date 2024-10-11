@@ -1,6 +1,7 @@
 <script setup>
-import { PAGE_PROGRESS } from '@/constants/page.constants';
 import { CheckCircleIcon } from '@heroicons/vue/24/solid';
+
+import { PAGE_PROGRESS } from '@/constants/page.constants';
 </script>
 
 <template>

@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import BaseButton from '@/components/BaseButton.vue';
-import { ButtonColor } from '@/types/BaseButton.types';
-import type { TOption } from '@/types/BaseSelector.types';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
+
+import BaseButton from '@/components/BaseButton.vue';
+
+import { ButtonColor, type TOption } from '@/types/base-components.types.ts';
 
 defineProps<{
   selected: string | number | null;

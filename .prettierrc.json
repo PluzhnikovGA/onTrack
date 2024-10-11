@@ -5,5 +5,18 @@
   "singleQuote": true,
   "printWidth": 100,
   "trailingComma": "all",
-  "plugins": ["prettier-plugin-tailwindcss"]
+  "plugins": ["prettier-plugin-tailwindcss", "@trivago/prettier-plugin-sort-imports"],
+  "importOrder": [
+    "<THIRD_PARTY_MODULES>",
+    "^@/pages/(.*)$",
+    "^@/components/(.*)$",
+    "^@/assets/(.*)$",
+    "^@/utils/(.*)$",
+    "^@/types/(.*)$",
+    "^@/constants/(.*)$",
+    "^../(.*)",
+    "^./(.*)"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }
