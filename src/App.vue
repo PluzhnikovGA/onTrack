@@ -25,9 +25,8 @@ import { generateActivitiesList, generateActivitySelectOptions, id } from './uti
 import { normalizePageHash } from './utils/navUtils';
 
 const currentPage = ref<string>(normalizePageHash());
-const timelineItems = ref<TTimelineItem[]>(generateTimelineItems());
-
 const activities = ref<TActivity[]>(generateActivitiesList());
+const timelineItems = ref<TTimelineItem[]>(generateTimelineItems(activities.value));
 
 const activitySelectOptions = computed((): TOption[] =>
   generateActivitySelectOptions(activities.value),
@@ -41,6 +40,7 @@ function deleteActivity(activityId: string): void {
   timelineItems.value.forEach((timelineItem) => {
     if (timelineItem.activityId === activityId) {
       timelineItem.activityId = null;
+      timelineItem.activitySeconds = 0;
     }
   });
   const index = activities.value.findIndex((activity) => activity.id === activityId);

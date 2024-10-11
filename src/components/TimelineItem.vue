@@ -36,6 +36,6 @@ function selectActivity(id: string | number | null): void {
       :selected="timelineItem.activityId"
       @select="selectActivity($event)"
     />
-    <TimelineStopwatch :seconds="timelineItem.activitySeconds" />
+    <TimelineStopwatch :seconds="timelineItem.activitySeconds" :hour="timelineItem.hour" />
   </li>
 </template>
