@@ -27,8 +27,7 @@ const timelineItemRefs = ref<(InstanceType<typeof TimelineItem> | null)[]>([]);
 watchPostEffect(async () => {
   if (props.currentPage === PAGE_TIMELINE) {
     await nextTick();
-    const currentHour = new Date().getHours();
-    scrollToTimelineHour(currentHour, timelineItemRefs.value, false);
+    scrollToTimelineHour(timelineItemRefs.value, null, false);
   }
 });
 
@@ -37,8 +36,12 @@ function setTimelineItemActivity(activity: TActivity | null, timelineItem: TTime
 }
 
 function scrollToTimeHour(selectedHour: number) {
-  scrollToTimelineHour(selectedHour, timelineItemRefs.value);
+  scrollToTimelineHour(timelineItemRefs.value, selectedHour);
 }
+
+defineExpose({
+  scrollToTimeHour,
+});
 </script>
 
 <template>

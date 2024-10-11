@@ -22,10 +22,11 @@ export function generateTimelineItems(activities: TActivity[]): TTimelineItem[] 
 }
 
 export function scrollToTimelineHour(
-  hour: number,
   timelineItemRefs: (InstanceType<typeof TimelineItem> | null)[],
+  hour: number | null = null,
   isSmooth: boolean = true,
 ) {
+  hour ??= new Date().getHours();
   const options = { behavior: isSmooth ? 'smooth' : 'instant' };
   if (hour === MIDNIGHT_HOUR) {
     document.body.scrollIntoView();

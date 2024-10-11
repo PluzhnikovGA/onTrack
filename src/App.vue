@@ -27,12 +27,20 @@ import { normalizePageHash } from './utils/navUtils';
 const currentPage = ref<string>(normalizePageHash());
 const activities = ref<TActivity[]>(generateActivitiesList());
 const timelineItems = ref<TTimelineItem[]>(generateTimelineItems(activities.value));
+const timeline = ref();
 
 const activitySelectOptions = computed((): TOption[] =>
   generateActivitySelectOptions(activities.value),
 );
 
 function goTo(page: string): void {
+  if (currentPage.value === PAGE_TIMELINE && page === PAGE_TIMELINE) {
+    timeline.value.scrollToTimeHour();
+  }
+
+  if (page !== PAGE_TIMELINE) {
+    document.body.scrollIntoView({ behavior: 'instant' });
+  }
   currentPage.value = page;
 }
 
@@ -71,6 +79,7 @@ function setSecondsToCompleted(seconds: number | null, activity: TActivity): voi
       :activity-select-options="activitySelectOptions"
       :activities="activities"
       :current-page="currentPage"
+      ref="timeline"
       @set-timeline-item-activity="setTimelineItemActivity"
     />
     <TheActivities
