@@ -1,16 +1,19 @@
 <script setup lang="ts">
 import { TrashIcon } from '@heroicons/vue/24/outline';
 
+import ActivitySecondsToComplete from '@/components/ActivitySecondsToComplete.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import BaseSelect from '@/components/BaseSelect.vue';
 
 import type { TActivity } from '@/types/activity.types';
 import { ButtonColor } from '@/types/base-components.types.ts';
+import type { TTimelineItem } from '@/types/timeline.types';
 
 import { PERIOD_SELECT_OPTIONS } from '@/constants/page.constants';
 
 const props = defineProps<{
   activity: TActivity;
+  timelineItems: TTimelineItem[];
 }>();
 
 const emit = defineEmits<{
@@ -41,14 +44,15 @@ function setSecondsToCompleted(value: string | number | null): void {
       </BaseButton>
       <span class="truncate text-xl">{{ activity.name }}</span>
     </div>
-    <div>
+    <div class="flex gap-2">
       <BaseSelect
-        class="font-mono"
+        class="font-mono grow"
         :placeholder="'hh:mm'"
         :options="PERIOD_SELECT_OPTIONS"
         :selected="!!activity.secondsToComplete ? activity.secondsToComplete : null"
         @select="setSecondsToCompleted($event)"
       />
+      <ActivitySecondsToComplete :activity="activity" :timelineItems="timelineItems" />
     </div>
   </li>
 </template>

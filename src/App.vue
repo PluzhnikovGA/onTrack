@@ -68,6 +68,10 @@ function setTimelineItemActivity(activity: TActivity | null, timelineItem: TTime
 function setSecondsToCompleted(seconds: number | null, activity: TActivity): void {
   activity.secondsToComplete = !!seconds ? seconds : 0;
 }
+
+function updateSeconds(second: number, timelineItem: TTimelineItem) {
+  timelineItem.activitySeconds += second;
+}
 </script>
 
 <template>
@@ -81,10 +85,12 @@ function setSecondsToCompleted(seconds: number | null, activity: TActivity): voi
       :current-page="currentPage"
       ref="timeline"
       @set-timeline-item-activity="setTimelineItemActivity"
+      @update-seconds="updateSeconds"
     />
     <TheActivities
       v-show="currentPage === PAGE_ACTIVITIES"
       :activities="activities"
+      :timeline-items="timelineItems"
       @delete-activity="deleteActivity"
       @create-activity="createActivity"
       @set-seconds-to-completed="setSecondsToCompleted"

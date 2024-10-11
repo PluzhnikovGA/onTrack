@@ -16,6 +16,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'selectActivity', activity: TActivity | null): void;
   (e: 'scrollToTimeHour', selectedHour: number): void;
+  (e: 'updateSeconds', value: number): void;
 }>();
 
 function selectActivity(id: string | number | null): void {
@@ -30,6 +31,10 @@ function selectActivity(id: string | number | null): void {
 function scrollToTimeHour() {
   emit('scrollToTimeHour', props.timelineItem.hour);
 }
+
+function updateSeconds(second: number) {
+  emit('updateSeconds', second);
+}
 </script>
 
 <template>
@@ -41,6 +46,10 @@ function scrollToTimeHour() {
       :selected="timelineItem.activityId"
       @select="selectActivity($event)"
     />
-    <TimelineStopwatch :seconds="timelineItem.activitySeconds" :hour="timelineItem.hour" />
+    <TimelineStopwatch
+      :seconds="timelineItem.activitySeconds"
+      :hour="timelineItem.hour"
+      @update-seconds="updateSeconds"
+    />
   </li>
 </template>

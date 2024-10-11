@@ -20,6 +20,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'setTimelineItemActivity', activity: TActivity | null, timelineItem: TTimelineItem): void;
+  (e: 'updateSeconds', value: number, timelineItem: TTimelineItem): void;
 }>();
 
 const timelineItemRefs = ref<(InstanceType<typeof TimelineItem> | null)[]>([]);
@@ -39,6 +40,10 @@ function scrollToTimeHour(selectedHour: number) {
   scrollToTimelineHour(timelineItemRefs.value, selectedHour);
 }
 
+function updateSeconds(second: number, timelineItem: TTimelineItem) {
+  emit('updateSeconds', second, timelineItem);
+}
+
 defineExpose({
   scrollToTimeHour,
 });
@@ -56,6 +61,7 @@ defineExpose({
         ref="timelineItemRefs"
         @select-activity="setTimelineItemActivity($event, timelineItem)"
         @scroll-to-time-hour="scrollToTimeHour"
+        @update-seconds="updateSeconds($event, timelineItem)"
       />
     </ul>
   </div>

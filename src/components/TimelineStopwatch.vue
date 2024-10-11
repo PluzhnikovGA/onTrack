@@ -15,6 +15,10 @@ const props = defineProps<{
   hour: number;
 }>();
 
+const emit = defineEmits<{
+  (e: 'updateSeconds', value: number): void;
+}>();
+
 const seconds = ref<number>(props.seconds);
 const isRunning = ref<number | null>(null);
 
@@ -22,6 +26,7 @@ const isStartButtonDisabled = props.hour !== new Date().getHours();
 
 function start() {
   isRunning.value = setInterval(() => {
+    emit('updateSeconds', 1);
     seconds.value++;
   }, MILLISECONDS_IN_SECONDS);
 }
@@ -32,6 +37,7 @@ function stop() {
 }
 
 function reset() {
+  emit('updateSeconds', -seconds.value);
   stop();
   seconds.value = 0;
 }

@@ -4,9 +4,11 @@ import TheActivitiesEmptyState from '@/components/TheActivitiesEmptyState.vue';
 import TheActivityForm from '@/components/TheActivityForm.vue';
 
 import type { TActivity } from '@/types/activity.types';
+import type { TTimelineItem } from '@/types/timeline.types';
 
 defineProps<{
   activities: TActivity[];
+  timelineItems: TTimelineItem[];
 }>();
 
 const emit = defineEmits<{
@@ -35,9 +37,10 @@ function setSecondsToCompleted(seconds: number | null, activity: TActivity): voi
   <div class="flex grow flex-col">
     <ul v-if="activities.length > 0" class="grow divide-y">
       <ActivityItem
-        v-for="activity in activities"
-        :key="activity.id"
+        v-for="(activity, index) in activities"
+        :key="`${activity.id}_${index}`"
         :activity="activity"
+        :timelineItems="timelineItems"
         @delete="deleteActivity(activity)"
         @set-seconds-to-completed="setSecondsToCompleted($event, activity)"
       />

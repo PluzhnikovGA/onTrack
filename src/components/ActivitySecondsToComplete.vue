@@ -1,0 +1,39 @@
+<script setup lang="ts">
+import { computed } from 'vue';
+
+import { getTotalActivitySeconds } from '@/utils/activityUtils';
+import { formatSeconds } from '@/utils/timeUtils';
+
+import type { TActivity } from '@/types/activity.types';
+import type { TTimelineItem } from '@/types/timeline.types';
+
+const props = defineProps<{
+  activity: TActivity;
+  timelineItems: TTimelineItem[];
+}>();
+
+const classes = computed(
+  () =>
+    `flex items-center rounded bg-purple-100 px-2 font-mono text-xl text-purple-600 ${colorClasses.value}`,
+);
+
+const colorClasses = computed(() =>
+  secondsDiff.value < 0 ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600',
+);
+
+const seconds = computed(() => `${sign.value}${formatSeconds(secondsDiff.value)}`);
+
+const secondsDiff = computed(
+  () =>
+    getTotalActivitySeconds(props.activity.id, props.timelineItems) -
+    props.activity.secondsToComplete,
+);
+
+const sign = computed(() => (secondsDiff.value >= 0 ? '+' : '-'));
+</script>
+
+<template>
+  <div v-if="activity.secondsToComplete" :class="classes">
+    {{ seconds }}
+  </div>
+</template>
