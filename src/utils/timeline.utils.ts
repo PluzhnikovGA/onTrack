@@ -16,10 +16,10 @@ import('@/utils/activity.utils').then(({ activities }: { activities: Ref<TActivi
 });
 
 export function updateTimelineItemActivitySeconds(
-  second: number,
+  seconds: number,
   timelineItem: TTimelineItem,
 ): void {
-  timelineItem.activitySeconds += second;
+  timelineItem.activitySeconds = seconds;
 }
 
 export function setTimelineItemActivity(

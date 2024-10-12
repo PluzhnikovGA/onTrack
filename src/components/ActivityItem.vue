@@ -38,7 +38,7 @@ function handleDelete(): void {
         :placeholder="'hh:mm'"
         :options="periodSelectOptions"
         :selected="!!activity.secondsToComplete ? activity.secondsToComplete : null"
-        @select="setActivitySecondsToCompleted($event, activity)"
+        @select="setActivitySecondsToCompleted($event, activity.id)"
       />
       <ActivitySecondsToComplete :activity="activity" />
     </div>

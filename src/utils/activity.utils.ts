@@ -17,9 +17,15 @@ export function createActivity(newActivity: string): void {
 
 export function setActivitySecondsToCompleted(
   seconds: string | number | null,
-  activity: TActivity,
+  activityId: string,
 ): void {
-  activity.secondsToComplete = typeof seconds === 'number' ? seconds : 0;
+  const parsedSeconds = Number(seconds);
+
+  activities.value.forEach((activity) => {
+    if (activity.id === activityId) {
+      activity.secondsToComplete = isNaN(parsedSeconds) ? 0 : parsedSeconds;
+    }
+  });
 }
 
 export function deleteActivity(activityId: string): void {
