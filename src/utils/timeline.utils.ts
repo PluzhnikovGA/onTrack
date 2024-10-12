@@ -23,10 +23,10 @@ export function updateTimelineItemActivitySeconds(
 }
 
 export function setTimelineItemActivity(
-  activityId: string | null,
+  activityId: string | number | null,
   timelineItem: TTimelineItem,
 ): void {
-  timelineItem.activityId = activityId;
+  timelineItem.activityId = typeof activityId === 'number' ? null : activityId;
 }
 
 export function resetTimelineItemActivities(activityId: string): void {

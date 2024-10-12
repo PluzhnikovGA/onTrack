@@ -1,29 +1,25 @@
 <script setup lang="ts">
 import { TrashIcon } from '@heroicons/vue/24/outline';
-import { inject } from 'vue';
 
 import ActivitySecondsToComplete from '@/components/ActivitySecondsToComplete.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import BaseSelect from '@/components/BaseSelect.vue';
 
-import type { TActivity, TDeleteActivity, TSetSecondsToCompleted } from '@/types/activity.types';
-import { ButtonColor, type TOption } from '@/types/base-components.types.ts';
+import { deleteActivity, setActivitySecondsToCompleted } from '@/utils/activity.utils';
+import { generatePeriodSelectOptions } from '@/utils/time.utils';
+import { resetTimelineItemActivities } from '@/utils/timeline.utils';
 
-import {
-  deleteActivityKey,
-  periodSelectOptionsKey,
-  setActivitySecondsToCompletedKey,
-} from '../keys';
+import type { TActivity } from '@/types/activity.types';
+import { ButtonColor } from '@/types/base-components.types.ts';
 
 const props = defineProps<{
   activity: TActivity;
 }>();
 
-const periodSelectOptions = inject<TOption[]>(periodSelectOptionsKey)!;
-const setSecondsToCompleted = inject<TSetSecondsToCompleted>(setActivitySecondsToCompletedKey)!;
-const deleteActivity = inject<TDeleteActivity>(deleteActivityKey)!;
+const periodSelectOptions = generatePeriodSelectOptions();
 
 function handleDelete(): void {
+  resetTimelineItemActivities(props.activity.id);
   deleteActivity(props.activity.id);
 }
 </script>
@@ -42,7 +38,7 @@ function handleDelete(): void {
         :placeholder="'hh:mm'"
         :options="periodSelectOptions"
         :selected="!!activity.secondsToComplete ? activity.secondsToComplete : null"
-        @select="setSecondsToCompleted($event, activity)"
+        @select="setActivitySecondsToCompleted($event, activity)"
       />
       <ActivitySecondsToComplete :activity="activity" />
     </div>

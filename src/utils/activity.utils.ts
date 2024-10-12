@@ -15,9 +15,11 @@ export function createActivity(newActivity: string): void {
   activities.value.push({ id: id(), name: newActivity, secondsToComplete: 0 });
 }
 
-export function setActivitySecondsToCompleted(seconds: number | null, activity: TActivity): void {
-  console.log(seconds || 0);
-  activity.secondsToComplete = seconds || 0;
+export function setActivitySecondsToCompleted(
+  seconds: string | number | null,
+  activity: TActivity,
+): void {
+  activity.secondsToComplete = typeof seconds === 'number' ? seconds : 0;
 }
 
 export function deleteActivity(activityId: string): void {

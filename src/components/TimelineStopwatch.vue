@@ -1,25 +1,20 @@
 <script setup lang="ts">
 import { ArrowPathIcon, PauseIcon, PlayIcon } from '@heroicons/vue/24/outline';
-import { inject, ref } from 'vue';
+import { ref } from 'vue';
 
 import BaseButton from '@/components/BaseButton.vue';
 
 import { currentHour, formatSeconds } from '@/utils/time.utils';
+import { updateTimelineItemActivitySeconds } from '@/utils/timeline.utils';
 
 import { ButtonColor } from '@/types/base-components.types.ts';
-import type { TTimelineItem, TUpdateTimelineItemActivitySeconds } from '@/types/timeline.types';
+import type { TTimelineItem } from '@/types/timeline.types';
 
 import { MILLISECONDS_IN_SECONDS } from '@/constants/time.constants';
-
-import { updateTimelineItemActivitySecondsKey } from '../keys';
 
 const props = defineProps<{
   timelineItem: TTimelineItem;
 }>();
-
-const updateTimelineItemActivitySeconds = inject<TUpdateTimelineItemActivitySeconds>(
-  updateTimelineItemActivitySecondsKey,
-)!;
 
 const seconds = ref<number>(props.timelineItem.activitySeconds);
 const isRunning = ref<number | null>(null);

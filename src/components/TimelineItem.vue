@@ -1,21 +1,16 @@
 <script setup lang="ts">
-import { type ComputedRef, inject } from 'vue';
-
 import BaseSelect from '@/components/BaseSelect.vue';
 import TimelineHour from '@/components/TimelineHour.vue';
 import TimelineStopwatch from '@/components/TimelineStopwatch.vue';
 
-import type { TOption } from '@/types/base-components.types.ts';
-import type { TSetTimelineItemActivity, TTimelineItem } from '@/types/timeline.types';
+import { activitySelectOptions } from '@/utils/activity.utils';
+import { setTimelineItemActivity } from '@/utils/timeline.utils';
 
-import { activitySelectOptionsKey, setTimelineItemActivityKey } from '../keys';
+import type { TTimelineItem } from '@/types/timeline.types';
 
 defineProps<{
   timelineItem: TTimelineItem;
 }>();
-
-const activitySelectOptions = inject<ComputedRef<TOption[]>>(activitySelectOptionsKey)!;
-const setTimelineItemActivity = inject<TSetTimelineItemActivity>(setTimelineItemActivityKey)!;
 
 const emit = defineEmits<{
   (e: 'scrollToTimeHour'): void;
