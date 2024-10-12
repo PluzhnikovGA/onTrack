@@ -8,19 +8,21 @@ import TimelineStopwatch from '@/components/TimelineStopwatch.vue';
 import type { TOption } from '@/types/base-components.types.ts';
 import type { TSetTimelineItemActivity, TTimelineItem } from '@/types/timeline.types';
 
-const props = defineProps<{
+import { activitySelectOptionsKey, setTimelineItemActivityKey } from '../keys';
+
+defineProps<{
   timelineItem: TTimelineItem;
 }>();
 
-const activitySelectOptions = inject<ComputedRef<TOption[]>>('activitySelectOptions');
-const setTimelineItemActivity = inject<TSetTimelineItemActivity>('setTimelineItemActivity')!;
+const activitySelectOptions = inject<ComputedRef<TOption[]>>(activitySelectOptionsKey)!;
+const setTimelineItemActivity = inject<TSetTimelineItemActivity>(setTimelineItemActivityKey)!;
 
 const emit = defineEmits<{
-  (e: 'scrollToTimeHour', selectedHour: number): void;
+  (e: 'scrollToTimeHour'): void;
 }>();
 
 function scrollToTimeHour() {
-  emit('scrollToTimeHour', props.timelineItem.hour);
+  emit('scrollToTimeHour');
 }
 </script>
 
@@ -29,7 +31,7 @@ function scrollToTimeHour() {
     <TimelineHour :hour="timelineItem.hour" @click.prevent="scrollToTimeHour" />
     <BaseSelect
       :placeholder="`Rest`"
-      :options="activitySelectOptions!"
+      :options="activitySelectOptions"
       :selected="timelineItem.activityId"
       @select="setTimelineItemActivity($event, timelineItem)"
     />

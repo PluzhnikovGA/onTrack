@@ -9,10 +9,12 @@ const props = withDefaults(
     color: ButtonColor.PRIMARY,
   },
 );
+
+const classes = `${props.color} rounded p-3 disabled:cursor-not-allowed disabled:opacity-50`;
 </script>
 
 <template>
-  <button :class="`${props.color} rounded p-3 disabled:cursor-not-allowed disabled:opacity-50`">
+  <button :class="`${classes}`">
     <slot></slot>
   </button>
 </template>

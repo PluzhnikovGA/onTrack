@@ -1,17 +1,14 @@
 <script setup lang="ts">
-import { computed, inject } from 'vue';
+import { computed } from 'vue';
 
-import { getTotalActivitySeconds } from '@/utils/activityUtils';
-import { formatSeconds } from '@/utils/timeUtils';
+import { formatSeconds } from '@/utils/time.utils';
+import { getTotalActivitySeconds } from '@/utils/timeline.utils';
 
 import type { TActivity } from '@/types/activity.types';
-import type { TTimelineItem } from '@/types/timeline.types';
 
 const props = defineProps<{
   activity: TActivity;
 }>();
-
-const timelineItems = inject<TTimelineItem[]>('timelineItems')!;
 
 const classes = computed(
   () =>
@@ -25,8 +22,7 @@ const colorClasses = computed(() =>
 const seconds = computed(() => `${sign.value}${formatSeconds(secondsDiff.value)}`);
 
 const secondsDiff = computed(
-  () =>
-    getTotalActivitySeconds(props.activity.id, timelineItems) - props.activity.secondsToComplete,
+  () => getTotalActivitySeconds(props.activity.id) - props.activity.secondsToComplete,
 );
 
 const sign = computed(() => (secondsDiff.value >= 0 ? '+' : '-'));

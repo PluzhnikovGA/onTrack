@@ -5,15 +5,10 @@ import TimelineItem from '@/components/TimelineItem.vue';
 
 import { currentPage } from '@/router/router';
 
-import { scrollToTimelineHour } from '@/utils/timelineUtils';
-
-import type { TTimelineItem } from '@/types/timeline.types';
+import { scrollToTimelineHour } from '@/utils/timeline.utils';
+import { timelineItems } from '@/utils/timeline.utils';
 
 import { PAGE_TIMELINE } from '@/constants/page.constants';
-
-defineProps<{
-  timelineItems: TTimelineItem[];
-}>();
 
 const timelineItemRefs = ref<(InstanceType<typeof TimelineItem> | null)[]>([]);
 
@@ -41,7 +36,7 @@ defineExpose({
         :key="`hour_${timelineItem.hour}`"
         :timeline-item="timelineItem"
         ref="timelineItemRefs"
-        @scroll-to-time-hour="scrollToTimeHour"
+        @scroll-to-time-hour="scrollToTimeHour(timelineItem.hour)"
       />
     </ul>
   </div>

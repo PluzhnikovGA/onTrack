@@ -6,9 +6,11 @@ import BaseButton from '@/components/BaseButton.vue';
 
 import type { TCreateActivity } from '@/types/activity.types';
 
+import { createActivityKey } from '../keys';
+
 const activity = ref<string>('');
 
-const createActivity = inject<TCreateActivity>('createActivity')!;
+const createActivity = inject<TCreateActivity>(createActivityKey)!;
 
 async function handleSubmit() {
   const newActivity = activity.value.trim();

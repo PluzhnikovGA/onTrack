@@ -4,25 +4,27 @@ import { inject, ref } from 'vue';
 
 import BaseButton from '@/components/BaseButton.vue';
 
-import { formatSeconds } from '@/utils/timeUtils';
+import { currentHour, formatSeconds } from '@/utils/time.utils';
 
 import { ButtonColor } from '@/types/base-components.types.ts';
 import type { TTimelineItem, TUpdateTimelineItemActivitySeconds } from '@/types/timeline.types';
 
-import { MILLISECONDS_IN_SECONDS } from '@/constants/page.constants';
+import { MILLISECONDS_IN_SECONDS } from '@/constants/time.constants';
+
+import { updateTimelineItemActivitySecondsKey } from '../keys';
 
 const props = defineProps<{
   timelineItem: TTimelineItem;
 }>();
 
 const updateTimelineItemActivitySeconds = inject<TUpdateTimelineItemActivitySeconds>(
-  'updateTimelineItemActivitySeconds',
+  updateTimelineItemActivitySecondsKey,
 )!;
 
 const seconds = ref<number>(props.timelineItem.activitySeconds);
 const isRunning = ref<number | null>(null);
 
-const isStartButtonDisabled = props.timelineItem.hour !== new Date().getHours();
+const isStartButtonDisabled = props.timelineItem.hour !== currentHour();
 
 function start() {
   isRunning.value = setInterval(() => {

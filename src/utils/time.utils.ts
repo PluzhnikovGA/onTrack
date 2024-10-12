@@ -4,7 +4,7 @@ import {
   MILLISECONDS_IN_SECONDS,
   MINUTES_IN_HOUR,
   SECONDS_IN_MINUTE,
-} from '@/constants/page.constants';
+} from '@/constants/time.constants';
 
 export function formatSeconds(seconds: number): string {
   const date = new Date();
@@ -34,4 +34,8 @@ function generatePeriodSelectOptionsLabel(periodInMinute: number): string {
     .padStart(2, '0');
 
   return `${hours}:${minutes}`;
+}
+
+export function currentHour(): number {
+  return new Date().getHours();
 }

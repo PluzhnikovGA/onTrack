@@ -9,13 +9,19 @@ import BaseSelect from '@/components/BaseSelect.vue';
 import type { TActivity, TDeleteActivity, TSetSecondsToCompleted } from '@/types/activity.types';
 import { ButtonColor, type TOption } from '@/types/base-components.types.ts';
 
+import {
+  deleteActivityKey,
+  periodSelectOptionsKey,
+  setActivitySecondsToCompletedKey,
+} from '../keys';
+
 const props = defineProps<{
   activity: TActivity;
 }>();
 
-const periodSelectOptions = inject<TOption[]>('periodSelectOptions')!;
-const setSecondsToCompleted = inject<TSetSecondsToCompleted>('setSecondsToCompleted')!;
-const deleteActivity = inject<TDeleteActivity>('deleteActivity')!;
+const periodSelectOptions = inject<TOption[]>(periodSelectOptionsKey)!;
+const setSecondsToCompleted = inject<TSetSecondsToCompleted>(setActivitySecondsToCompletedKey)!;
+const deleteActivity = inject<TDeleteActivity>(deleteActivityKey)!;
 
 function handleDelete(): void {
   deleteActivity(props.activity.id);

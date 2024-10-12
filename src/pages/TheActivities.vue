@@ -1,13 +1,9 @@
-<script setup lang="ts">
+<script setup>
 import ActivityItem from '@/components/ActivityItem.vue';
 import TheActivitiesEmptyState from '@/components/TheActivitiesEmptyState.vue';
 import TheActivityForm from '@/components/TheActivityForm.vue';
 
-import type { TActivity } from '@/types/activity.types';
-
-defineProps<{
-  activities: TActivity[];
-}>();
+import { activities } from '@/utils/activity.utils';
 </script>
 
 <template>
