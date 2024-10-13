@@ -4,7 +4,7 @@ import TimelineHour from '@/components/TimelineHour.vue';
 import TimelineStopwatch from '@/components/TimelineStopwatch.vue';
 
 import { activitySelectOptions } from '@/utils/activity.utils';
-import { setTimelineItemActivity } from '@/utils/timeline.utils';
+import { updateTimelineItem } from '@/utils/timeline.utils';
 
 import type { TTimelineItem } from '@/types/timeline.types';
 
@@ -28,7 +28,7 @@ function scrollToTimeHour() {
       :placeholder="`Rest`"
       :options="activitySelectOptions"
       :selected="timelineItem.activityId"
-      @select="setTimelineItemActivity($event, timelineItem)"
+      @select="updateTimelineItem(timelineItem, { activityId: $event as string })"
     />
 
     <TimelineStopwatch :timeline-item="timelineItem" />

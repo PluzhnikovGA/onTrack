@@ -5,7 +5,7 @@ import ActivitySecondsToComplete from '@/components/ActivitySecondsToComplete.vu
 import BaseButton from '@/components/BaseButton.vue';
 import BaseSelect from '@/components/BaseSelect.vue';
 
-import { deleteActivity, setActivitySecondsToCompleted } from '@/utils/activity.utils';
+import { deleteActivity, updateActivity } from '@/utils/activity.utils';
 import { generatePeriodSelectOptions } from '@/utils/time.utils';
 import { resetTimelineItemActivities } from '@/utils/timeline.utils';
 
@@ -21,6 +21,12 @@ const periodSelectOptions = generatePeriodSelectOptions();
 function handleDelete(): void {
   resetTimelineItemActivities(props.activity.id);
   deleteActivity(props.activity.id);
+}
+
+function updateSeconds(seconds: string | number | null): void {
+  const parsedSeconds = Number(seconds);
+
+  updateActivity(props.activity, { secondsToComplete: isNaN(parsedSeconds) ? 0 : parsedSeconds });
 }
 </script>
 
@@ -38,7 +44,7 @@ function handleDelete(): void {
         :placeholder="'hh:mm'"
         :options="periodSelectOptions"
         :selected="!!activity.secondsToComplete ? activity.secondsToComplete : null"
-        @select="setActivitySecondsToCompleted($event, activity.id)"
+        @select="updateSeconds"
       />
       <ActivitySecondsToComplete :activity="activity" />
     </div>

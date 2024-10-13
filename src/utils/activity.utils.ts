@@ -15,17 +15,8 @@ export function createActivity(newActivity: string): void {
   activities.value.push({ id: id(), name: newActivity, secondsToComplete: 0 });
 }
 
-export function setActivitySecondsToCompleted(
-  seconds: string | number | null,
-  activityId: string,
-): void {
-  const parsedSeconds = Number(seconds);
-
-  activities.value.forEach((activity) => {
-    if (activity.id === activityId) {
-      activity.secondsToComplete = isNaN(parsedSeconds) ? 0 : parsedSeconds;
-    }
-  });
+export function updateActivity(activity: TActivity, fields: Partial<TActivity>) {
+  return Object.assign(activity, fields);
 }
 
 export function deleteActivity(activityId: string): void {

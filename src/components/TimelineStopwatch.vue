@@ -5,7 +5,7 @@ import { ref, watch } from 'vue';
 import BaseButton from '@/components/BaseButton.vue';
 
 import { currentHour, formatSeconds } from '@/utils/time.utils';
-import { updateTimelineItemActivitySeconds } from '@/utils/timeline.utils';
+import { updateTimelineItem } from '@/utils/timeline.utils';
 
 import { ButtonColor } from '@/types/base-components.types.ts';
 import type { TTimelineItem } from '@/types/timeline.types';
@@ -24,13 +24,15 @@ const isStartButtonDisabled = props.timelineItem.hour !== currentHour();
 watch(
   () => props.timelineItem.activityId,
   () => {
-    updateTimelineItemActivitySeconds(seconds.value, props.timelineItem);
+    updateTimelineItem(props.timelineItem, { activitySeconds: seconds.value });
   },
 );
 
 function start() {
   isRunning.value = setInterval(() => {
-    updateTimelineItemActivitySeconds(props.timelineItem.activitySeconds + 1, props.timelineItem);
+    updateTimelineItem(props.timelineItem, {
+      activitySeconds: props.timelineItem.activitySeconds + 1,
+    });
     seconds.value++;
   }, MILLISECONDS_IN_SECONDS);
 }
@@ -42,10 +44,9 @@ function stop() {
 
 function reset() {
   stop();
-  updateTimelineItemActivitySeconds(
-    props.timelineItem.activitySeconds - seconds.value,
-    props.timelineItem,
-  );
+  updateTimelineItem(props.timelineItem, {
+    activitySeconds: props.timelineItem.activitySeconds - seconds.value,
+  });
   seconds.value = 0;
 }
 </script>
