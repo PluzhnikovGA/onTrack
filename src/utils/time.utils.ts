@@ -6,6 +6,10 @@ import {
   SECONDS_IN_MINUTE,
 } from '@/constants/number.constants';
 
+export function formatSecondsWithSing(seconds: number): string {
+  return `${seconds >= 0 ? '+' : '-'}${formatSeconds(seconds)}`;
+}
+
 export function formatSeconds(seconds: number): string {
   const date = new Date();
 

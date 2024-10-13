@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import ActivitySecondsToComplete from '@/components/ActivitySecondsToComplete.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import BaseIcon from '@/components/BaseIcon.vue';
 import BaseSelect from '@/components/BaseSelect.vue';
+import RemainingActivitySeconds from '@/components/RemainingActivitySeconds.vue';
 
 import { deleteActivity, updateActivity } from '@/utils/activity.utils';
 import { generatePeriodSelectOptions } from '@/utils/time.utils';
@@ -45,7 +45,7 @@ function updateSeconds(seconds: string | number | null): void {
         :selected="!!activity.secondsToComplete ? activity.secondsToComplete : null"
         @select="updateSeconds"
       />
-      <ActivitySecondsToComplete :activity="activity" />
+      <RemainingActivitySeconds :activity="activity" />
     </div>
   </li>
 </template>
