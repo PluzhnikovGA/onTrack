@@ -31,7 +31,7 @@ watchEffect(() =>
       ><BaseIcon :name="IconNames.ARROW_PATH"
     /></BaseButton>
     <div class="flex flex-grow items-center rounded bg-gray-100 px-2 font-mono text-3xl">
-      {{ formatSeconds(seconds) }}
+      {{ formatSeconds(timelineItem.activitySeconds) }}
     </div>
     <BaseButton v-if="isRunning" :color="ButtonColor.WARNING" @click="stop"
       ><BaseIcon :name="IconNames.PAUSE"

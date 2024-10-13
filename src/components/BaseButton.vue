@@ -15,6 +15,6 @@ const classes = `${props.color} rounded p-3 disabled:cursor-not-allowed disabled
 
 <template>
   <button :class="`${classes}`">
-    <slot></slot>
+    <slot />
   </button>
 </template>
