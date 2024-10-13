@@ -10,17 +10,17 @@ import type { TActivity } from '@/types/activity.types';
 
 type TUseProgress = {
   percentage: ComputedRef<number>;
-  trackedSeconds: ComputedRef<number>;
+  trackedActivitySeconds: ComputedRef<number>;
   colorClass: ComputedRef<string>;
 };
 
 export function useProgress(activity: TActivity): TUseProgress {
-  const trackedSeconds: ComputedRef<number> = computed((): number =>
+  const trackedActivitySeconds: ComputedRef<number> = computed((): number =>
     calculateTrackedActivitySeconds(activity.id),
   );
 
   const percentage: ComputedRef<number> = computed((): number =>
-    calculateActivityCompletionPercentage(activity.secondsToComplete, trackedSeconds.value),
+    calculateActivityCompletionPercentage(activity.secondsToComplete, trackedActivitySeconds.value),
   );
 
   const colorClass: ComputedRef<string> = computed((): string =>
@@ -29,7 +29,7 @@ export function useProgress(activity: TActivity): TUseProgress {
 
   return {
     percentage,
-    trackedSeconds,
+    trackedActivitySeconds,
     colorClass,
   };
 }
