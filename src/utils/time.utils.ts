@@ -1,4 +1,4 @@
-import type { TOption } from '@/types/base-components.types.ts';
+import type { TOption } from '@/types/base-components.types';
 
 import {
   MILLISECONDS_IN_SECONDS,

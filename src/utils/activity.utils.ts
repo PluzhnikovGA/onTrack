@@ -1,7 +1,7 @@
 import { type Ref, computed, ref } from 'vue';
 
 import type { TActivity } from '@/types/activity.types';
-import type { TOption } from '@/types/base-components.types.ts';
+import type { TOption } from '@/types/base-components.types';
 
 import { SECONDS_IN_MINUTE } from '@/constants/number.constants';
 

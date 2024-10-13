@@ -3,7 +3,7 @@ import BaseIcon from '@/components/BaseIcon.vue';
 
 import { navigate } from '@/router/router';
 
-import { IconNames } from '@/types/base-components.types.ts';
+import { IconNames } from '@/types/base-components.types';
 
 import { PAGE_PROGRESS } from '@/constants/page.constants';
 </script>

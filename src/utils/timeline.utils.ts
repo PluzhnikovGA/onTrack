@@ -18,14 +18,12 @@ export function updateTimelineItem(timelineItem: TTimelineItem, fields: Partial<
 }
 
 export function resetTimelineItemActivities(activityId: string): void {
-  timelineItems.value
-    .filter((timelineItem) => hasActivity(timelineItem, activityId))
-    .forEach((timelineItem) =>
-      updateTimelineItem(timelineItem, {
-        activityId: null,
-        activitySeconds: 0,
-      }),
-    );
+  filterTimelineItemsByActivityId(activityId).forEach((timelineItem) =>
+    updateTimelineItem(timelineItem, {
+      activityId: null,
+      activitySeconds: 0,
+    }),
+  );
 }
 
 export function scrollToHour(hour: number, isSmooth: boolean = true): void {
@@ -38,10 +36,10 @@ export function scrollToCurrentHour(isSmooth: boolean = false): void {
   scrollToHour(currentHour(), isSmooth);
 }
 
-export function getTotalActivitySeconds(activityId: string): number {
-  return timelineItems.value
-    .filter((timelineItem) => hasActivity(timelineItem, activityId))
-    .reduce((totalSum, timelineItem) => Math.round(totalSum + timelineItem.activitySeconds), 0);
+export function calculateTrackedActivitySeconds(activityId: string): number {
+  return filterTimelineItemsByActivityId(activityId)
+    .map(({ activitySeconds }) => activitySeconds)
+    .reduce((total, seconds) => Math.round(total + seconds), 0);
 }
 
 function generateTimelineItems(): TTimelineItem[] {
@@ -52,6 +50,6 @@ function generateTimelineItems(): TTimelineItem[] {
   }));
 }
 
-function hasActivity(timeline: TTimelineItem, activityId: string): boolean {
-  return timeline.activityId === activityId;
+function filterTimelineItemsByActivityId(id: string): TTimelineItem[] {
+  return timelineItems.value.filter(({ activityId }: Partial<TTimelineItem>) => activityId === id);
 }

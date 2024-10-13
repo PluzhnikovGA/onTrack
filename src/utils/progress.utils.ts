@@ -1,11 +1,6 @@
-import { getTotalActivitySeconds } from '@/utils/timeline.utils';
-
-import type { TActivity } from '@/types/activity.types';
-
 import { HUNDRED_PERCENT, LOW_PERCENT, MEDIUM_PERCENT } from '@/constants/number.constants';
 
 export function getProgressColorClass(percentage: number): string {
-  console.log(percentage);
   switch (true) {
     case percentage < LOW_PERCENT:
       return 'bg-red-500';
@@ -18,7 +13,9 @@ export function getProgressColorClass(percentage: number): string {
   }
 }
 
-export function getActivityProgress(activity: TActivity): number {
-  const activitySeconds = getTotalActivitySeconds(activity.id);
-  return Math.floor((activitySeconds * HUNDRED_PERCENT) / activity.secondsToComplete);
+export function calculateActivityCompletionPercentage(
+  secondsToComplete: number,
+  trackedSeconds: number,
+): number {
+  return Math.floor((trackedSeconds * HUNDRED_PERCENT) / secondsToComplete);
 }

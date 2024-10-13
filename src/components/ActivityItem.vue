@@ -9,7 +9,7 @@ import { generatePeriodSelectOptions } from '@/utils/time.utils';
 import { resetTimelineItemActivities } from '@/utils/timeline.utils';
 
 import type { TActivity } from '@/types/activity.types';
-import { ButtonColor, IconNames } from '@/types/base-components.types.ts';
+import { ButtonColor, IconNames } from '@/types/base-components.types';
 
 const props = defineProps<{
   activity: TActivity;

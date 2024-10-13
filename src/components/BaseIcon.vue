@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IconNames } from '@/types/base-components.types.ts';
+import type { IconNames } from '@/types/base-components.types';
 
 import { ICONS } from '@/constants/icons.constants';
 

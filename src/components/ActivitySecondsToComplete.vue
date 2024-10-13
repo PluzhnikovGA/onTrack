@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 
 import { formatSeconds } from '@/utils/time.utils';
-import { getTotalActivitySeconds } from '@/utils/timeline.utils';
+import { calculateTrackedActivitySeconds } from '@/utils/timeline.utils';
 
 import type { TActivity } from '@/types/activity.types';
 
@@ -21,7 +21,7 @@ const colorClasses = computed(() =>
 const seconds = computed(() => `${sign.value}${formatSeconds(secondsDiff.value)}`);
 
 const secondsDiff = computed(
-  () => getTotalActivitySeconds(props.activity.id) - props.activity.secondsToComplete,
+  () => calculateTrackedActivitySeconds(props.activity.id) - props.activity.secondsToComplete,
 );
 
 const sign = computed(() => (secondsDiff.value >= 0 ? '+' : '-'));

@@ -7,7 +7,7 @@ import BaseIcon from '@/components/BaseIcon.vue';
 import { currentHour, formatSeconds } from '@/utils/time.utils';
 import { updateTimelineItem } from '@/utils/timeline.utils';
 
-import { ButtonColor, IconNames } from '@/types/base-components.types.ts';
+import { ButtonColor, IconNames } from '@/types/base-components.types';
 import type { TTimelineItem } from '@/types/timeline.types';
 
 import { MILLISECONDS_IN_SECONDS } from '@/constants/number.constants';
