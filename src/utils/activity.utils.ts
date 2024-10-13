@@ -3,9 +3,13 @@ import { type Ref, computed, ref } from 'vue';
 import type { TActivity } from '@/types/activity.types';
 import type { TOption } from '@/types/base-components.types.ts';
 
-import { SECONDS_IN_HOUR } from '@/constants/time.constants';
+import { SECONDS_IN_MINUTE } from '@/constants/number.constants';
 
 export const activities = ref<TActivity[]>(generateActivitiesList());
+
+export const trackedActivities = computed(() => {
+  return activities.value.filter((activity) => activity.secondsToComplete);
+});
 
 export const activitySelectOptions = computed((): TOption[] =>
   generateActivitySelectOptions(activities),
@@ -29,9 +33,9 @@ export function deleteActivity(activityId: string): void {
 
 function generateActivitiesList(): TActivity[] {
   return [
-    { id: id(), name: 'Coding', secondsToComplete: 0 * SECONDS_IN_HOUR },
-    { id: id(), name: 'Training', secondsToComplete: 1 * SECONDS_IN_HOUR },
-    { id: id(), name: 'Reading', secondsToComplete: 2 * SECONDS_IN_HOUR },
+    { id: id(), name: 'Coding', secondsToComplete: 15 * SECONDS_IN_MINUTE },
+    { id: id(), name: 'Training', secondsToComplete: 15 * SECONDS_IN_MINUTE },
+    { id: id(), name: 'Reading', secondsToComplete: 15 * SECONDS_IN_MINUTE },
   ];
 }
 

@@ -4,7 +4,7 @@ import {
   MILLISECONDS_IN_SECONDS,
   MINUTES_IN_HOUR,
   SECONDS_IN_MINUTE,
-} from '@/constants/time.constants';
+} from '@/constants/number.constants';
 
 export function formatSeconds(seconds: number): string {
   const date = new Date();

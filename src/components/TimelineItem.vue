@@ -11,19 +11,11 @@ import type { TTimelineItem } from '@/types/timeline.types';
 defineProps<{
   timelineItem: TTimelineItem;
 }>();
-
-const emit = defineEmits<{
-  (e: 'scrollToTimeHour'): void;
-}>();
-
-function scrollToTimeHour() {
-  emit('scrollToTimeHour');
-}
 </script>
 
 <template>
   <li class="border-grey-200 relative flex flex-col gap-2 border-t px-4 py-10">
-    <TimelineHour :hour="timelineItem.hour" @click.prevent="scrollToTimeHour" />
+    <TimelineHour :hour="timelineItem.hour" />
     <BaseSelect
       :placeholder="`Rest`"
       :options="activitySelectOptions"

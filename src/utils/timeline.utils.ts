@@ -1,20 +1,17 @@
-import { type Ref, ref } from 'vue';
+import { ref } from 'vue';
 
 import TimelineItem from '@/components/TimelineItem.vue';
 
 import { currentHour } from '@/utils/time.utils';
 
-import type { TActivity } from '@/types/activity.types';
 import type { TTimelineItem } from '@/types/timeline.types';
 
-import { HOURS_IN_DAY, MIDNIGHT_HOUR } from '@/constants/time.constants';
+import { HOURS_IN_DAY, MIDNIGHT_HOUR } from '@/constants/number.constants';
 
 export const timelineItems = ref<TTimelineItem[]>([]);
 export const timelineItemRefs = ref<(InstanceType<typeof TimelineItem> | null)[]>([]);
 
-import('@/utils/activity.utils').then(({ activities }: { activities: Ref<TActivity[]> }): void => {
-  timelineItems.value = generateTimelineItems(activities.value);
-});
+timelineItems.value = generateTimelineItems();
 
 export function updateTimelineItem(timelineItem: TTimelineItem, fields: Partial<TTimelineItem>) {
   return Object.assign(timelineItem, fields);
@@ -47,11 +44,11 @@ export function getTotalActivitySeconds(activityId: string): number {
     .reduce((totalSum, timelineItem) => Math.round(totalSum + timelineItem.activitySeconds), 0);
 }
 
-function generateTimelineItems(activities: TActivity[]): TTimelineItem[] {
+function generateTimelineItems(): TTimelineItem[] {
   return Array.from({ length: HOURS_IN_DAY }, (_, hour) => ({
     hour,
-    activityId: [0, 1, 2, 3, 4].includes(hour) ? activities[hour % 3].id : null,
-    activitySeconds: [0, 1, 2, 3, 4].includes(hour) ? hour * 600 : 0,
+    activityId: null, //[0, 1, 2, 3, 4].includes(hour) ? activities[hour % 3].id : null,
+    activitySeconds: 0, // [0, 1, 2, 3, 4].includes(hour) ? hour * 600 : 0,
   }));
 }
 
