@@ -1,7 +1,7 @@
 <script setup>
-import { NAV_ITEMS } from '@/constants/page.constants';
+import NavItem from '@/components/NavItem.vue';
 
-import NavItem from './NavItem.vue';
+import { NAV_ITEMS } from '@/constants/page.constants';
 </script>
 
 <template>

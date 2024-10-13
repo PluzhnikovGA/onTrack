@@ -1,6 +1,6 @@
-import type { Component } from 'vue';
+import type { IconNames } from './base-components.types.ts';
 
 export type TNavItem = {
   page: string;
-  icon: Component;
+  icon: IconNames;
 };

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
+import BaseIcon from '@/components/BaseIcon.vue';
+
 import { currentPage, navigate } from '@/router/router';
 
 import type { TNavItem } from '@/types/navigation.types';
@@ -16,7 +18,7 @@ const classes = computed(() => [
 <template>
   <li class="flex-1">
     <a :href="`#${navItem.page}`" :class="classes" @click="navigate(navItem.page)">
-      <component :is="navItem.icon" class="h-6 w-6" />
+      <BaseIcon :name="navItem.icon" classes="h-6 w-6" />
       {{ navItem.page }}
     </a>
   </li>

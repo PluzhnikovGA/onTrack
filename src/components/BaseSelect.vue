@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { XMarkIcon } from '@heroicons/vue/24/outline';
-
 import BaseButton from '@/components/BaseButton.vue';
+import BaseIcon from '@/components/BaseIcon.vue';
 
-import { ButtonColor, type TOption } from '@/types/base-components.types.ts';
+import { ButtonColor, IconNames, type TOption } from '@/types/base-components.types.ts';
 
 defineProps<{
   selected: string | number | null;
@@ -28,7 +27,7 @@ function defaultValue(): void {
 <template>
   <div class="flex gap-2">
     <BaseButton @click="defaultValue" :color="ButtonColor.NEUTRAL">
-      <XMarkIcon class="h-8" />
+      <BaseIcon :name="IconNames.X_MARK" />
     </BaseButton>
     <select class="w-full truncate rounded bg-gray-100 px-2 py-1 text-2xl" @change="changeValue">
       <option :selected="selected === null" disabled value="">{{ placeholder }}</option>

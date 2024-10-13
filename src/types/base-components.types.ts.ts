@@ -1,3 +1,5 @@
+import type { Component } from 'vue';
+
 export enum ButtonColor {
   PRIMARY = 'bg-purple-500 enabled:hover:bg-purple-600 text-white',
   SUCCESS = 'bg-green-500 enabled:hover:bg-green-600 text-white',
@@ -10,3 +12,18 @@ export type TOption = {
   value: number | string;
   label: string;
 };
+
+export type TIcons = Record<string, Component>;
+
+export enum IconNames {
+  ARROW_PATH = 'ArrowPath',
+  CHECK_CIRCLE = 'CheckCircle',
+  PAUSE = 'Pause',
+  PLAY = 'Play',
+  PLUS = 'Plus',
+  TRASH = 'Trash',
+  X_MARK = 'XMark',
+  CHART_BAR = 'ChartBar',
+  CLOCK = 'Clock',
+  LIST_BULLET = 'ListBullet',
+}
