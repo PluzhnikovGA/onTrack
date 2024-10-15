@@ -1,6 +1,8 @@
 import { IconNames } from '@/types/baseComponents.types';
 import type { TNavItem } from '@/types/navigation.types';
 
+export const APP_NAME = 'ontrack';
+
 export const PAGE_TIMELINE = 'timeline';
 export const PAGE_ACTIVITIES = 'activities';
 export const PAGE_PROGRESS = 'progress';
