@@ -6,7 +6,7 @@ import BaseIcon from '@/components/BaseIcon.vue';
 
 import { createActivity } from '@/utils/activity.utils';
 
-import { IconNames } from '@/types/base-components.types';
+import { IconNames } from '@/types/baseComponents.types';
 
 const activity = ref<string>('');
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ButtonColor } from '@/types/base-components.types';
+import { ButtonColor } from '@/types/baseComponents.types';
 
 const props = withDefaults(
   defineProps<{

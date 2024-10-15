@@ -6,10 +6,11 @@ import BaseIcon from '@/components/BaseIcon.vue';
 
 import { useStopwatch } from '@/composables/useStopwatch';
 
-import { currentHour, formatSeconds } from '@/utils/time.utils';
+import { formatSeconds } from '@/utils/time.utils';
 import { updateTimelineItem } from '@/utils/timeline.utils';
+import { now } from '@/utils/timer.utils';
 
-import { ButtonColor, IconNames } from '@/types/base-components.types';
+import { ButtonColor, IconNames } from '@/types/baseComponents.types';
 import type { TTimelineItem } from '@/types/timeline.types';
 
 const props = defineProps<{
@@ -18,6 +19,11 @@ const props = defineProps<{
 
 const { seconds, isRunning, start, stop, reset } = useStopwatch(props.timelineItem.activitySeconds);
 
+watchEffect(() => {
+  if (props.timelineItem.hour !== now.value.getHours() && isRunning.value) {
+    stop();
+  }
+});
 watchEffect(() =>
   updateTimelineItem(props.timelineItem, {
     activitySeconds: seconds.value,
@@ -40,7 +46,7 @@ watchEffect(() =>
       v-else
       :color="ButtonColor.SUCCESS"
       @click="start"
-      :disabled="timelineItem.hour !== currentHour()"
+      :disabled="timelineItem.hour !== now.getHours()"
       ><BaseIcon :name="IconNames.PLAY"
     /></BaseButton>
   </div>

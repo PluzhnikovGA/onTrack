@@ -11,7 +11,7 @@ import {
   XMarkIcon as XMark,
 } from '@heroicons/vue/24/outline';
 
-import { IconNames, type TIcons } from '@/types/base-components.types';
+import { IconNames, type TIcons } from '@/types/baseComponents.types';
 
 export const ICONS: TIcons = {
   [IconNames.ARROW_PATH]: ArrowPath,

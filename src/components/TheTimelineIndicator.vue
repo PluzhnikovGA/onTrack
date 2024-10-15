@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { type ComputedRef, type Ref, computed, ref } from 'vue';
 
-import { useSecondsSinceMidnight } from '@/composables/useSecondsSinceMidnight';
+import { secondsSinceMidnightInPercentage } from '@/utils/timer.utils';
 
 import { HUNDRED_PERCENT } from '@/constants/number.constants';
 
 const indicatorRef: Ref<HTMLHRElement | null> = ref(null);
-const { secondsSinceMidnightInPercentage } = useSecondsSinceMidnight();
 
 const topOffset: ComputedRef<number> = computed(
   (): number => (secondsSinceMidnightInPercentage.value * getTimelineHeight()) / HUNDRED_PERCENT,

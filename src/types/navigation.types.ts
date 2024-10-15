@@ -1,4 +1,4 @@
-import type { IconNames } from './base-components.types.ts';
+import type { IconNames } from './baseComponents.types.js';
 
 export type TNavItem = {
   page: string;

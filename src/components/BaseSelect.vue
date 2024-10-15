@@ -2,7 +2,7 @@
 import BaseButton from '@/components/BaseButton.vue';
 import BaseIcon from '@/components/BaseIcon.vue';
 
-import { ButtonColor, IconNames, type TOption } from '@/types/base-components.types';
+import { ButtonColor, IconNames, type TOption } from '@/types/baseComponents.types';
 
 defineProps<{
   selected: string | number | null;

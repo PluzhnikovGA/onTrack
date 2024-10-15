@@ -1,4 +1,4 @@
-import type { TOption } from '@/types/base-components.types';
+import type { TOption } from '@/types/baseComponents.types';
 
 import {
   MILLISECONDS_IN_SECONDS,
@@ -38,8 +38,4 @@ function generatePeriodSelectOptionsLabel(periodInMinute: number): string {
     .padStart(2, '0');
 
   return `${hours}:${minutes}`;
-}
-
-export function currentHour(): number {
-  return new Date().getHours();
 }

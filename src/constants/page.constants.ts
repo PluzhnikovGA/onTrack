@@ -1,4 +1,4 @@
-import { IconNames } from '@/types/base-components.types';
+import { IconNames } from '@/types/baseComponents.types';
 import type { TNavItem } from '@/types/navigation.types';
 
 export const PAGE_TIMELINE = 'timeline';

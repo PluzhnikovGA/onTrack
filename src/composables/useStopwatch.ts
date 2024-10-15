@@ -13,7 +13,7 @@ type TUseStopWatch = {
 export function useStopwatch(initialSeconds: number): TUseStopWatch {
   const seconds = ref<number>(initialSeconds);
   const isRunning = ref<number | null>(null);
-  const temp = 120;
+  const temp = 1;
 
   function start(): void {
     isRunning.value = setInterval(() => {

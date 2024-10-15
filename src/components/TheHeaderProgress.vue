@@ -5,7 +5,7 @@ import { navigate } from '@/router/router';
 
 import { useTotalProgress } from '@/composables/useTotalProgress';
 
-import { IconNames } from '@/types/base-components.types';
+import { IconNames } from '@/types/baseComponents.types';
 
 import { HUNDRED_PERCENT } from '@/constants/number.constants';
 import { PAGE_PROGRESS } from '@/constants/page.constants';
