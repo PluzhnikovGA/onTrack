@@ -6,6 +6,26 @@ import {
   SECONDS_IN_MINUTE,
 } from '@/constants/number.constants';
 
+export function isToday(date: Date): boolean {
+  return today().toDateString() === date.toDateString();
+}
+
+export function today(): Date {
+  const date = new Date();
+
+  date.setHours(0, 0);
+
+  return date;
+}
+
+export function tomorrow(): Date {
+  const tomorrow = today();
+
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  return tomorrow;
+}
+
 export function formatSecondsWithSing(seconds: number): string {
   return `${seconds >= 0 ? '+' : '-'}${formatSeconds(seconds)}`;
 }
