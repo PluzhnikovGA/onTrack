@@ -15,7 +15,7 @@ const props = defineProps<{ navItem: TNavItem }>();
 
 const classes = computed(() => [
   'flex flex-col items-center p-2 text-xs capitalize ',
-  { 'bg-gray-200': currentPage.value === props.navItem.page },
+  props.navItem.page === currentPage.value ? 'bg-gray-200' : 'hover:bg-gray-100',
   {
     'pointer-events-none':
       currentPage.value !== PAGE_TIMELINE && currentPage.value === props.navItem.page,

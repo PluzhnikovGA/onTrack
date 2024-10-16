@@ -3,6 +3,7 @@ import type { TOption } from '@/types/baseComponents.types';
 import {
   MILLISECONDS_IN_SECONDS,
   MINUTES_IN_HOUR,
+  SECONDS_IN_HOUR,
   SECONDS_IN_MINUTE,
 } from '@/constants/number.constants';
 
@@ -47,6 +48,20 @@ export function generatePeriodSelectOptions(): TOption[] {
     value: periodInMinutes * SECONDS_IN_MINUTE,
     label: generatePeriodSelectOptionsLabel(periodInMinutes),
   }));
+}
+
+export function endOfHour(date: Date): Date {
+  const endOfHour = new Date(date);
+
+  endOfHour.setTime(endOfHour.getTime() + SECONDS_IN_HOUR * MILLISECONDS_IN_SECONDS);
+
+  endOfHour.setMinutes(0, 0, 0);
+
+  return endOfHour;
+}
+
+export function toSeconds(milliseconds: number): number {
+  return Math.round(milliseconds / MILLISECONDS_IN_SECONDS);
 }
 
 function generatePeriodSelectOptionsLabel(periodInMinute: number): string {

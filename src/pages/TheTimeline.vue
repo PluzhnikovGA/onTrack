@@ -10,14 +10,14 @@ import {
   timelineItemRefs,
   timelineItems,
 } from '@/utils/timeline.utils';
-import { startTimer, stopTimer } from '@/utils/timer.utils';
+import { startCurrentDateTimer, stopCurrentDateTimer } from '@/utils/timer.utils';
 
 onActivated(() => {
   scrollToCurrentHour();
-  startTimer();
+  startCurrentDateTimer();
 });
 
-onDeactivated(stopTimer);
+onDeactivated(stopCurrentDateTimer);
 
 stopTimelineItemTimer();
 </script>

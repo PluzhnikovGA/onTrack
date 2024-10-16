@@ -20,17 +20,17 @@ const secondsSinceMidnight: ComputedRef<number> = computed(() => {
   return (now.value.getTime() - midnight.value) / MILLISECONDS_IN_SECONDS;
 });
 
-let timer: number;
+let currentDateTimer: number;
 
-export function startTimer(): void {
+export function startCurrentDateTimer(): void {
   now.value = today();
 
-  timer = setInterval(
+  currentDateTimer = setInterval(
     () => (now.value = new Date(now.value.getTime() + MILLISECONDS_IN_SECONDS)),
     MILLISECONDS_IN_SECONDS,
   );
 }
 
-export function stopTimer(): void {
-  clearInterval(timer);
+export function stopCurrentDateTimer(): void {
+  clearInterval(currentDateTimer);
 }
