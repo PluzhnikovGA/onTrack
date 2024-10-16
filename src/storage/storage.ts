@@ -1,6 +1,7 @@
 import { activities } from '@/utils/activity.utils';
 import { endOfHour, isToday, toSeconds, today } from '@/utils/time.utils';
-import { timelineItems } from '@/utils/timeline.utils';
+import { activeTimelineItem, timelineItems } from '@/utils/timeline.utils';
+import { startTimelineItemTimer, stopTimelineItemTimer } from '@/utils/timer.utils';
 
 import type { TActivity } from '@/types/activity.types';
 import type { TTimelineItem } from '@/types/timeline.types';
@@ -13,7 +14,18 @@ type TData = {
   lastActiveAt: Date;
 };
 
-export function saveState(): void {
+export function syncState(shouldLoad: boolean = true): void {
+  shouldLoad ? loadState() : saveState();
+
+  if (activeTimelineItem.value) {
+    shouldLoad
+      ? startTimelineItemTimer(activeTimelineItem.value)
+      : stopTimelineItemTimer(activeTimelineItem.value);
+  }
+}
+
+function saveState(): void {
+  console.log('saveState');
   const state: TData = {
     timelineItems: timelineItems.value,
     activities: activities.value,
@@ -23,7 +35,8 @@ export function saveState(): void {
   localStorage.setItem(APP_NAME, JSON.stringify(state));
 }
 
-export function loadState(): void {
+function loadState(): void {
+  console.log('loadState');
   const serializedState = localStorage.getItem(APP_NAME);
 
   const state: TData = serializedState ? JSON.parse(serializedState) : {};

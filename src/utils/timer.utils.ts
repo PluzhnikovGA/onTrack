@@ -1,7 +1,7 @@
-import { type ComputedRef, type Ref, computed, nextTick, ref, watchEffect } from 'vue';
+import { type ComputedRef, type Ref, computed, ref, watchEffect } from 'vue';
 
 import { today } from '@/utils/time.utils';
-import { activeTimelineItem, updateTimelineItem } from '@/utils/timeline.utils';
+import { updateTimelineItem } from '@/utils/timeline.utils';
 
 import type { TTimelineItem } from '@/types/timeline.types';
 
@@ -18,9 +18,11 @@ export const secondsSinceMidnightInPercentage: ComputedRef<number> = computed(
   (): number => (HUNDRED_PERCENT * secondsSinceMidnight.value) / SECONDS_IN_DAY,
 );
 
-const midnight: ComputedRef<number> = computed(() => new Date(now.value).setHours(0, 0, 0, 0));
+const midnight: ComputedRef<number> = computed((): number =>
+  new Date(now.value).setHours(0, 0, 0, 0),
+);
 
-const secondsSinceMidnight: ComputedRef<number> = computed(() => {
+const secondsSinceMidnight: ComputedRef<number> = computed((): number => {
   return (now.value.getTime() - midnight.value) / MILLISECONDS_IN_SECONDS;
 });
 
@@ -40,6 +42,7 @@ export function stopCurrentDateTimer(): void {
 }
 
 export function startTimelineItemTimer(timelineItem: TTimelineItem): void {
+  console.log('startTimelineItemTimer');
   updateTimelineItem(timelineItem, { isActive: true });
 
   timelineItemTimer.value = setInterval(() => {
@@ -50,6 +53,7 @@ export function startTimelineItemTimer(timelineItem: TTimelineItem): void {
 }
 
 export function stopTimelineItemTimer(timelineItem: TTimelineItem): void {
+  console.log('stopTimelineItemTimer');
   if (timelineItemTimer.value !== null) {
     updateTimelineItem(timelineItem, { isActive: false });
 
@@ -67,9 +71,9 @@ export function resetTimelineItemTimer(timelineItem: TTimelineItem): void {
   }
 }
 
-watchEffect(() => {
-  nextTick(() => {
-    if (activeTimelineItem.value && activeTimelineItem.value.hour !== now.value.getHours()) {
+import('@/utils/timeline.utils').then(({ activeTimelineItem }): void => {
+  watchEffect((): void => {
+    if (activeTimelineItem?.value && activeTimelineItem.value.hour !== now.value.getHours()) {
       stopTimelineItemTimer(activeTimelineItem.value);
     }
   });

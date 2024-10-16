@@ -17,8 +17,6 @@ import type { TTimelineItem } from '@/types/timeline.types';
 defineProps<{
   timelineItem: TTimelineItem;
 }>();
-
-timelineItemTimer;
 </script>
 
 <template>
