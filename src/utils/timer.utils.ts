@@ -1,4 +1,9 @@
-import { type ComputedRef, type Ref, computed, ref } from 'vue';
+import { type ComputedRef, type Ref, computed, nextTick, ref, watchEffect } from 'vue';
+
+import { today } from '@/utils/time.utils';
+import { activeTimelineItem, updateTimelineItem } from '@/utils/timeline.utils';
+
+import type { TTimelineItem } from '@/types/timeline.types';
 
 import {
   HUNDRED_PERCENT,
@@ -6,9 +11,8 @@ import {
   SECONDS_IN_DAY,
 } from '@/constants/number.constants';
 
-import { today } from './time.utils';
-
 export const now: Ref<Date> = ref(today());
+export const timelineItemTimer: Ref<number | null> = ref(null);
 
 export const secondsSinceMidnightInPercentage: ComputedRef<number> = computed(
   (): number => (HUNDRED_PERCENT * secondsSinceMidnight.value) / SECONDS_IN_DAY,
@@ -34,3 +38,39 @@ export function startCurrentDateTimer(): void {
 export function stopCurrentDateTimer(): void {
   clearInterval(currentDateTimer);
 }
+
+export function startTimelineItemTimer(timelineItem: TTimelineItem): void {
+  updateTimelineItem(timelineItem, { isActive: true });
+
+  timelineItemTimer.value = setInterval(() => {
+    updateTimelineItem(timelineItem, {
+      activitySeconds: timelineItem.activitySeconds + 1,
+    });
+  }, MILLISECONDS_IN_SECONDS);
+}
+
+export function stopTimelineItemTimer(timelineItem: TTimelineItem): void {
+  if (timelineItemTimer.value !== null) {
+    updateTimelineItem(timelineItem, { isActive: false });
+
+    clearInterval(timelineItemTimer.value);
+
+    timelineItemTimer.value = null;
+  }
+}
+
+export function resetTimelineItemTimer(timelineItem: TTimelineItem): void {
+  updateTimelineItem(timelineItem, { activitySeconds: 0 });
+
+  if (timelineItem.hour === now.value.getHours()) {
+    stopTimelineItemTimer(timelineItem);
+  }
+}
+
+watchEffect(() => {
+  nextTick(() => {
+    if (activeTimelineItem.value && activeTimelineItem.value.hour !== now.value.getHours()) {
+      stopTimelineItemTimer(activeTimelineItem.value);
+    }
+  });
+});

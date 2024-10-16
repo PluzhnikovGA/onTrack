@@ -37,7 +37,7 @@ export function loadState(): void {
 }
 
 function syncIdleSeconds(timelineItems: TTimelineItem[], lastActiveAt: Date): TTimelineItem[] {
-  const activeTimelineItem = timelineItems.find(({ isActive }) => Boolean(isActive));
+  const activeTimelineItem = timelineItems.find(({ isActive }) => isActive);
 
   if (activeTimelineItem) {
     activeTimelineItem.activitySeconds += calculateIdleSeconds(lastActiveAt);
