@@ -42,7 +42,6 @@ export function stopCurrentDateTimer(): void {
 }
 
 export function startTimelineItemTimer(timelineItem: TTimelineItem): void {
-  console.log('startTimelineItemTimer');
   updateTimelineItem(timelineItem, { isActive: true });
 
   timelineItemTimer.value = setInterval(() => {
@@ -53,7 +52,6 @@ export function startTimelineItemTimer(timelineItem: TTimelineItem): void {
 }
 
 export function stopTimelineItemTimer(timelineItem: TTimelineItem): void {
-  console.log('stopTimelineItemTimer');
   if (timelineItemTimer.value !== null) {
     updateTimelineItem(timelineItem, { isActive: false });
 

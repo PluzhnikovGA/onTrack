@@ -25,7 +25,6 @@ export function syncState(shouldLoad: boolean = true): void {
 }
 
 function saveState(): void {
-  console.log('saveState');
   const state: TData = {
     timelineItems: timelineItems.value,
     activities: activities.value,
@@ -36,7 +35,6 @@ function saveState(): void {
 }
 
 function loadState(): void {
-  console.log('loadState');
   const serializedState = localStorage.getItem(APP_NAME);
 
   const state: TData = serializedState ? JSON.parse(serializedState) : {};
