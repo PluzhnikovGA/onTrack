@@ -3,7 +3,6 @@ import { type ComputedRef, type Ref, computed, ref } from 'vue';
 import TimelineItem from '@/components/TimelineItem.vue';
 
 import { endOfHour, isToday, toSeconds, today } from '@/utils/time.utils';
-import { now } from '@/utils/timer.utils';
 
 import type { TTimelineItem } from '@/types/timeline.types';
 
@@ -29,8 +28,7 @@ export function resetTimelineItemActivities(activityId: string): void {
   filterTimelineItemsByActivityId(activityId).forEach((timelineItem) =>
     updateTimelineItem(timelineItem, {
       activityId: null,
-      activitySeconds:
-        timelineItem.hour === now.value.getHours() ? timelineItem.activitySeconds : 0,
+      activitySeconds: timelineItem.hour === today().getHours() ? timelineItem.activitySeconds : 0,
     }),
   );
 }
@@ -42,7 +40,7 @@ export function scrollToHour(hour: number, isSmooth: boolean = true): void {
 }
 
 export function scrollToCurrentHour(isSmooth: boolean = false): void {
-  scrollToHour(now.value.getHours(), isSmooth);
+  scrollToHour(today().getHours(), isSmooth);
 }
 
 export function calculateTrackedActivitySeconds(activityId: string): number {

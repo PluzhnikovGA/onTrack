@@ -1,7 +1,7 @@
 import { type ComputedRef, type Ref, computed, ref, watchEffect } from 'vue';
 
-import { today } from '@/utils/time.utils';
-import { updateTimelineItem } from '@/utils/timeline.utils';
+import { now, today } from '@/utils/time.utils';
+import { activeTimelineItem, updateTimelineItem } from '@/utils/timeline.utils';
 
 import type { TTimelineItem } from '@/types/timeline.types';
 
@@ -11,8 +11,15 @@ import {
   SECONDS_IN_DAY,
 } from '@/constants/number.constants';
 
-export const now: Ref<Date> = ref(today());
-export const timelineItemTimer: Ref<number | null> = ref(null);
+const timelineItemTimer: Ref<number | null> = ref(null);
+
+import('@/utils/timeline.utils').then(({ activeTimelineItem }): void => {
+  watchEffect((): void => {
+    if (activeTimelineItem?.value && activeTimelineItem.value.hour !== now.value.getHours()) {
+      stopTimelineItemTimer();
+    }
+  });
+});
 
 export const secondsSinceMidnightInPercentage: ComputedRef<number> = computed(
   (): number => (HUNDRED_PERCENT * secondsSinceMidnight.value) / SECONDS_IN_DAY,
@@ -31,17 +38,18 @@ let currentDateTimer: number;
 export function startCurrentDateTimer(): void {
   now.value = today();
 
-  currentDateTimer = setInterval(
-    () => (now.value = new Date(now.value.getTime() + MILLISECONDS_IN_SECONDS)),
-    MILLISECONDS_IN_SECONDS,
-  );
+  currentDateTimer = setInterval(() => (now.value = today()), MILLISECONDS_IN_SECONDS);
 }
 
 export function stopCurrentDateTimer(): void {
   clearInterval(currentDateTimer);
 }
 
-export function startTimelineItemTimer(timelineItem: TTimelineItem): void {
+export function startTimelineItemTimer(timelineItem?: TTimelineItem): void {
+  timelineItem = timelineItem ?? activeTimelineItem.value;
+
+  if (!timelineItem) return;
+
   updateTimelineItem(timelineItem, { isActive: true });
 
   timelineItemTimer.value = setInterval(() => {
@@ -51,9 +59,9 @@ export function startTimelineItemTimer(timelineItem: TTimelineItem): void {
   }, MILLISECONDS_IN_SECONDS);
 }
 
-export function stopTimelineItemTimer(timelineItem: TTimelineItem): void {
-  if (timelineItemTimer.value !== null) {
-    updateTimelineItem(timelineItem, { isActive: false });
+export function stopTimelineItemTimer(): void {
+  if (timelineItemTimer.value !== null && activeTimelineItem.value) {
+    updateTimelineItem(activeTimelineItem.value, { isActive: false });
 
     clearInterval(timelineItemTimer.value);
 
@@ -65,14 +73,6 @@ export function resetTimelineItemTimer(timelineItem: TTimelineItem): void {
   updateTimelineItem(timelineItem, { activitySeconds: 0 });
 
   if (timelineItem.hour === now.value.getHours()) {
-    stopTimelineItemTimer(timelineItem);
+    stopTimelineItemTimer();
   }
 }
-
-import('@/utils/timeline.utils').then(({ activeTimelineItem }): void => {
-  watchEffect((): void => {
-    if (activeTimelineItem?.value && activeTimelineItem.value.hour !== now.value.getHours()) {
-      stopTimelineItemTimer(activeTimelineItem.value);
-    }
-  });
-});

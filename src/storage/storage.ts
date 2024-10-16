@@ -18,9 +18,7 @@ export function syncState(shouldLoad: boolean = true): void {
   shouldLoad ? loadState() : saveState();
 
   if (activeTimelineItem.value) {
-    shouldLoad
-      ? startTimelineItemTimer(activeTimelineItem.value)
-      : stopTimelineItemTimer(activeTimelineItem.value);
+    shouldLoad ? startTimelineItemTimer() : stopTimelineItemTimer();
   }
 }
 

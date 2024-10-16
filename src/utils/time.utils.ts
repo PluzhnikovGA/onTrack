@@ -1,3 +1,5 @@
+import { type Ref, ref } from 'vue';
+
 import type { TOption } from '@/types/baseComponents.types';
 
 import {
@@ -7,22 +9,14 @@ import {
   SECONDS_IN_MINUTE,
 } from '@/constants/number.constants';
 
+export const now: Ref<Date> = ref(today());
+
 export function isToday(date: Date): boolean {
   return today().toDateString() === date.toDateString();
 }
 
 export function today(): Date {
-  const date = new Date();
-
-  return date;
-}
-
-export function tomorrow(): Date {
-  const tomorrow = today();
-
-  tomorrow.setDate(tomorrow.getDate() + 1);
-
-  return tomorrow;
+  return new Date();
 }
 
 export function formatSecondsWithSing(seconds: number): string {

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
+import { now } from '@/utils/time.utils';
 import { scrollToHour } from '@/utils/timeline.utils';
-import { now } from '@/utils/timer.utils';
 
 const props = defineProps<{
   hour: number;

@@ -32,7 +32,6 @@ export function deleteActivity(activityId: string): void {
 }
 
 export function initializeActivities(state: TData): void {
-  console.log(state);
   activities.value = state.activities || [];
 }
 

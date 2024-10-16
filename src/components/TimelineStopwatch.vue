@@ -2,13 +2,12 @@
 import BaseButton from '@/components/BaseButton.vue';
 import BaseIcon from '@/components/BaseIcon.vue';
 
-import { formatSeconds } from '@/utils/time.utils';
+import { formatSeconds, now } from '@/utils/time.utils';
+import { activeTimelineItem } from '@/utils/timeline.utils';
 import {
-  now,
   resetTimelineItemTimer,
   startTimelineItemTimer,
   stopTimelineItemTimer,
-  timelineItemTimer,
 } from '@/utils/timer.utils';
 
 import { ButtonColor, IconNames } from '@/types/baseComponents.types';
@@ -31,9 +30,9 @@ defineProps<{
       {{ formatSeconds(timelineItem.activitySeconds) }}
     </div>
     <BaseButton
-      v-if="timelineItemTimer && timelineItem.hour === now.getHours()"
+      v-if="timelineItem === activeTimelineItem"
       :color="ButtonColor.WARNING"
-      @click="($event) => stopTimelineItemTimer(timelineItem)"
+      @click="stopTimelineItemTimer"
       ><BaseIcon :name="IconNames.PAUSE"
     /></BaseButton>
     <BaseButton
