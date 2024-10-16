@@ -3,6 +3,8 @@ import { type Ref, computed, ref } from 'vue';
 import type { TActivity } from '@/types/activity.types';
 import type { TOption } from '@/types/baseComponents.types';
 
+import type { TData } from '@/storage/storage';
+
 export const activities = ref<TActivity[]>([]);
 
 export const trackedActivities = computed(() => {
@@ -27,6 +29,11 @@ export function deleteActivity(activityId: string): void {
   if (index !== -1) {
     activities.value.splice(index, 1);
   }
+}
+
+export function initializeActivities(state: TData): void {
+  console.log(state);
+  activities.value = state.activities || [];
 }
 
 function id(): string {

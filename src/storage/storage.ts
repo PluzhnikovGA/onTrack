@@ -1,6 +1,6 @@
-import { activities } from '@/utils/activity.utils';
-import { endOfHour, isToday, toSeconds, today } from '@/utils/time.utils';
-import { activeTimelineItem, resetTimelineItems, timelineItems } from '@/utils/timeline.utils';
+import { activities, initializeActivities } from '@/utils/activity.utils';
+import { today } from '@/utils/time.utils';
+import { activeTimelineItem, initializeTimelineItems, timelineItems } from '@/utils/timeline.utils';
 import { startTimelineItemTimer, stopTimelineItemTimer } from '@/utils/timer.utils';
 
 import type { TActivity } from '@/types/activity.types';
@@ -8,7 +8,7 @@ import type { TTimelineItem } from '@/types/timeline.types';
 
 import { APP_NAME } from '@/constants/page.constants';
 
-type TData = {
+export type TData = {
   timelineItems: TTimelineItem[];
   activities: TActivity[];
   lastActiveAt: Date;
@@ -35,35 +35,13 @@ function saveState(): void {
 }
 
 function loadState(): void {
-  const serializedState = localStorage.getItem(APP_NAME);
+  const state: TData = loadFromLocalStorage();
 
-  const state: TData = serializedState ? JSON.parse(serializedState) : {};
+  initializeActivities(state);
 
-  activities.value = state.activities || activities.value;
-
-  const lastActiveAt = new Date(state.lastActiveAt);
-
-  timelineItems.value = state.timelineItems || timelineItems.value;
-
-  if (activeTimelineItem.value && isToday(lastActiveAt)) {
-    timelineItems.value = syncIdleSeconds(state.timelineItems, lastActiveAt);
-  } else if (state.timelineItems && !isToday(lastActiveAt)) {
-    timelineItems.value = resetTimelineItems(state.timelineItems);
-  }
+  initializeTimelineItems(state);
 }
 
-function syncIdleSeconds(timelineItems: TTimelineItem[], lastActiveAt: Date): TTimelineItem[] {
-  const activeTimelineItem = timelineItems.find(({ isActive }) => isActive);
-
-  if (activeTimelineItem) {
-    activeTimelineItem.activitySeconds += calculateIdleSeconds(lastActiveAt);
-  }
-
-  return timelineItems;
-}
-
-function calculateIdleSeconds(lastActiveAt: Date) {
-  return lastActiveAt.getHours() === today().getHours()
-    ? toSeconds(today().getTime() - lastActiveAt.getTime())
-    : toSeconds(endOfHour(lastActiveAt).getTime() - lastActiveAt.getTime());
+function loadFromLocalStorage(): TData {
+  return JSON.parse(localStorage.getItem(APP_NAME) ?? '{}');
 }
