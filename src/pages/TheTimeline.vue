@@ -4,7 +4,12 @@ import { onActivated, onDeactivated } from 'vue';
 import TheTimelineIndicator from '@/components/TheTimelineIndicator.vue';
 import TimelineItem from '@/components/TimelineItem.vue';
 
-import { scrollToCurrentHour, timelineItemRefs, timelineItems } from '@/utils/timeline.utils';
+import {
+  scrollToCurrentHour,
+  stopTimelineItemTimer,
+  timelineItemRefs,
+  timelineItems,
+} from '@/utils/timeline.utils';
 import { startTimer, stopTimer } from '@/utils/timer.utils';
 
 onActivated(() => {
@@ -13,6 +18,8 @@ onActivated(() => {
 });
 
 onDeactivated(stopTimer);
+
+stopTimelineItemTimer();
 </script>
 
 <template>
