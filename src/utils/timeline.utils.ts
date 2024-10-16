@@ -51,25 +51,15 @@ export function calculateTrackedActivitySeconds(activityId: string): number {
     .reduce((total, seconds) => Math.round(total + seconds), 0);
 }
 
-export function resetTimelineItems(timelineItems: TTimelineItem[]): TTimelineItem[] {
-  return timelineItems.map(
-    (timelineItem): TTimelineItem => ({
-      ...timelineItem,
-      activitySeconds: 0,
-      isActive: false,
-    }),
-  );
-}
-
 export function initializeTimelineItems(state: TData): void {
   const lastActiveAt = new Date(state.lastActiveAt);
 
   timelineItems.value = state.timelineItems || generateTimelineItems();
 
   if (activeTimelineItem.value && isToday(lastActiveAt)) {
-    timelineItems.value = syncIdleSeconds(state.timelineItems, lastActiveAt);
+    syncIdleSeconds(lastActiveAt);
   } else if (state.timelineItems && !isToday(lastActiveAt)) {
-    timelineItems.value = resetTimelineItems(state.timelineItems);
+    resetTimelineItems();
   }
 }
 
@@ -86,18 +76,27 @@ function filterTimelineItemsByActivityId(id: string): TTimelineItem[] {
   return timelineItems.value.filter(({ activityId }: Partial<TTimelineItem>) => activityId === id);
 }
 
-function syncIdleSeconds(timelineItems: TTimelineItem[], lastActiveAt: Date): TTimelineItem[] {
-  const activeTimelineItem = timelineItems.find(({ isActive }) => isActive);
-
-  if (activeTimelineItem) {
-    activeTimelineItem.activitySeconds += calculateIdleSeconds(lastActiveAt);
+function syncIdleSeconds(lastActiveAt: Date): void {
+  if (activeTimelineItem.value) {
+    updateTimelineItem(activeTimelineItem.value, {
+      activitySeconds:
+        activeTimelineItem.value.activitySeconds + calculateIdleSeconds(lastActiveAt),
+    });
   }
-
-  return timelineItems;
 }
 
 function calculateIdleSeconds(lastActiveAt: Date) {
   return lastActiveAt.getHours() === today().getHours()
     ? toSeconds(today().getTime() - lastActiveAt.getTime())
     : toSeconds(endOfHour(lastActiveAt).getTime() - lastActiveAt.getTime());
+}
+
+function resetTimelineItems(): void {
+  timelineItems.value.forEach(
+    (timelineItem): TTimelineItem =>
+      updateTimelineItem(timelineItem, {
+        activitySeconds: 0,
+        isActive: false,
+      }),
+  );
 }
