@@ -1,6 +1,6 @@
 import { activities } from '@/utils/activity.utils';
 import { endOfHour, isToday, toSeconds, today } from '@/utils/time.utils';
-import { activeTimelineItem, timelineItems } from '@/utils/timeline.utils';
+import { activeTimelineItem, resetTimelineItems, timelineItems } from '@/utils/timeline.utils';
 import { startTimelineItemTimer, stopTimelineItemTimer } from '@/utils/timer.utils';
 
 import type { TActivity } from '@/types/activity.types';
@@ -39,12 +39,17 @@ function loadState(): void {
 
   const state: TData = serializedState ? JSON.parse(serializedState) : {};
 
+  activities.value = state.activities || activities.value;
+
   const lastActiveAt = new Date(state.lastActiveAt);
 
-  timelineItems.value = isToday(lastActiveAt)
-    ? syncIdleSeconds(state.timelineItems, lastActiveAt)
-    : timelineItems.value;
-  activities.value = state.activities || activities.value;
+  timelineItems.value = state.timelineItems || timelineItems.value;
+
+  if (activeTimelineItem.value && isToday(lastActiveAt)) {
+    timelineItems.value = syncIdleSeconds(state.timelineItems, lastActiveAt);
+  } else if (state.timelineItems && !isToday(lastActiveAt)) {
+    timelineItems.value = resetTimelineItems(state.timelineItems);
+  }
 }
 
 function syncIdleSeconds(timelineItems: TTimelineItem[], lastActiveAt: Date): TTimelineItem[] {

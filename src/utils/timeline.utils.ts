@@ -50,6 +50,16 @@ export function calculateTrackedActivitySeconds(activityId: string): number {
     .reduce((total, seconds) => Math.round(total + seconds), 0);
 }
 
+export function resetTimelineItems(timelineItems: TTimelineItem[]): TTimelineItem[] {
+  return timelineItems.map(
+    (timelineItem): TTimelineItem => ({
+      ...timelineItem,
+      activitySeconds: 0,
+      isActive: false,
+    }),
+  );
+}
+
 function generateTimelineItems(): TTimelineItem[] {
   return Array.from({ length: HOURS_IN_DAY }, (_, hour) => ({
     hour,
