@@ -1,8 +1,9 @@
-import { type ComputedRef, type Ref, computed, ref } from 'vue';
+import { type ComputedRef, type Ref, computed, ref, watch } from 'vue';
 
 import TimelineItem from '@/components/TimelineItem.vue';
 
-import { endOfHour, isToday, toSeconds, today } from '@/utils/time.utils';
+import { endOfHour, isToday, now, toSeconds, today } from '@/utils/time.utils';
+import { stopTimelineItemTimer } from '@/utils/timer.utils';
 
 import type { TTimelineItem } from '@/types/timeline.types';
 
@@ -16,6 +17,16 @@ export const timelineItemRefs = ref<(InstanceType<typeof TimelineItem> | null)[]
 export const activeTimelineItem: ComputedRef<TTimelineItem | undefined> = computed(() =>
   timelineItems.value.find(({ isActive }) => isActive),
 );
+
+watch(now, (after, before) => {
+  if (activeTimelineItem?.value && activeTimelineItem.value.hour !== after.getHours()) {
+    stopTimelineItemTimer();
+  }
+
+  if (after.getHours() !== before.getHours() && after.getHours() === MIDNIGHT_HOUR) {
+    resetTimelineItems();
+  }
+});
 
 export function updateTimelineItem(
   timelineItem: TTimelineItem,
