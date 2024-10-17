@@ -11,9 +11,9 @@ import { NAV_ITEMS } from '@/constants/page.constants';
 export const currentPage = ref<PageName>(normalizePageHash());
 
 export const routes: Record<PageName, Component> = {
-  [PageName.PAGE_TIMELINE]: TheTimeline,
-  [PageName.PAGE_ACTIVITIES]: TheActivities,
-  [PageName.PAGE_PROGRESS]: TheProgress,
+  [PageName.TIMELINE]: TheTimeline,
+  [PageName.ACTIVITIES]: TheActivities,
+  [PageName.PROGRESS]: TheProgress,
 };
 
 export function navigate(page: PageName): void {
@@ -22,11 +22,11 @@ export function navigate(page: PageName): void {
   currentPage.value = page;
 }
 
-function normalizePageHash(): PageName {
+export function normalizePageHash(): PageName {
   const hash = window.location.hash.slice(1);
 
   if (NAV_ITEMS.some((item): boolean => item.page === hash)) return hash as PageName;
 
-  window.location.hash = PageName.PAGE_TIMELINE;
-  return PageName.PAGE_TIMELINE;
+  window.location.hash = PageName.TIMELINE;
+  return PageName.TIMELINE;
 }

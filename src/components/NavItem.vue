@@ -17,13 +17,13 @@ const classes = computed<(string | { 'pointer-events-none': boolean })[]>(
     props.navItem.page === currentPage.value ? 'bg-gray-200' : 'hover:bg-gray-100',
     {
       'pointer-events-none':
-        currentPage.value !== PageName.PAGE_TIMELINE && currentPage.value === props.navItem.page,
+        currentPage.value !== PageName.TIMELINE && currentPage.value === props.navItem.page,
     },
   ],
 );
 
 function handleClick(): void {
-  props.navItem.page === PageName.PAGE_TIMELINE && currentPage.value === PageName.PAGE_TIMELINE
+  props.navItem.page === PageName.TIMELINE && currentPage.value === PageName.TIMELINE
     ? scrollToCurrentHour(true)
     : navigate(props.navItem.page);
 }

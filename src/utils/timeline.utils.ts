@@ -83,7 +83,7 @@ function generateTimelineItems(): TTimelineItem[] {
   }));
 }
 
-function filterTimelineItemsByActivityId(id: string): TTimelineItem[] {
+export function filterTimelineItemsByActivityId(id: string): TTimelineItem[] {
   return timelineItems.value.filter(({ activityId }: Partial<TTimelineItem>) => activityId === id);
 }
 

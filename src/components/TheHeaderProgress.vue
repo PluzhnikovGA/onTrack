@@ -14,7 +14,7 @@ const { percentage, colorClass } = useTotalProgress();
 </script>
 
 <template>
-  <a :href="`#${PageName.PAGE_PROGRESS}`" class="text-sm" @click="navigate(PageName.PAGE_PROGRESS)">
+  <a :href="`#${PageName.PROGRESS}`" class="text-sm" @click="navigate(PageName.PROGRESS)">
     <div v-if="percentage === HUNDRED_PERCENT" class="flex items-center gap-1">
       Day complete! <BaseIcon :name="IconName.CHECK_CIRCLE" class="h-7 text-green-500" />
     </div>

@@ -6,14 +6,12 @@ import { scrollToCurrentHour } from '@/utils/timeline.utils';
 import { PageName } from '@/types/navigation.types';
 
 function handleClick(): void {
-  currentPage.value === PageName.PAGE_TIMELINE
-    ? scrollToCurrentHour(true)
-    : navigate(PageName.PAGE_TIMELINE);
+  currentPage.value === PageName.TIMELINE ? scrollToCurrentHour(true) : navigate(PageName.TIMELINE);
 }
 </script>
 
 <template>
-  <a :href="`#${PageName.PAGE_TIMELINE}`" @click="handleClick"
+  <a :href="`#${PageName.TIMELINE}`" @click="handleClick"
     ><img src="@/assets/image/logo.png" alt="Logo" class="h-9"
   /></a>
 </template>

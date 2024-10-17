@@ -60,7 +60,7 @@ export function toSeconds(milliseconds: number): number {
   return Math.round(milliseconds / MILLISECONDS_IN_SECONDS);
 }
 
-function generatePeriodSelectOptionsLabel(periodInMinute: number): string {
+export function generatePeriodSelectOptionsLabel(periodInMinute: number): string {
   const minutes = (periodInMinute % MINUTES_IN_HOUR).toString().padStart(2, '0');
   const hours = Math.floor(periodInMinute / MINUTES_IN_HOUR)
     .toString()

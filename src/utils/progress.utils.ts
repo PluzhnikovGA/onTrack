@@ -1,22 +1,22 @@
 import { computed } from 'vue';
 
+import { trackedActivities } from '@/utils/activity.utils';
+
 import type { TActivity } from '@/types/activity.types';
 import { ProgressColorClass } from '@/types/progress.types';
 
 import { HUNDRED_PERCENT, LOW_PERCENT, MEDIUM_PERCENT } from '@/constants/number.constants';
 
-import { trackedActivities } from './activity.utils';
-
 export function getProgressColorClass(percentage: number): ProgressColorClass {
   switch (true) {
     case percentage < LOW_PERCENT:
-      return ProgressColorClass.BG_RED_500;
+      return ProgressColorClass.BG_RED;
     case percentage < MEDIUM_PERCENT:
-      return ProgressColorClass.BG_YELLOW_500;
+      return ProgressColorClass.BG_YELLOW;
     case percentage < HUNDRED_PERCENT:
-      return ProgressColorClass.BG_BLUE_500;
+      return ProgressColorClass.BG_BLUE;
     default:
-      return ProgressColorClass.BG_GREEN_500;
+      return ProgressColorClass.BG_GREEN;
   }
 }
 
