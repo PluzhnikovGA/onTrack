@@ -4,7 +4,3 @@ export type TTimelineItem = {
   activitySeconds: number;
   isActive: boolean;
 };
-
-export type TTimelineComponent = {
-  scrollToTimeHour: () => void;
-};

@@ -4,34 +4,29 @@ import TheActivities from '@/pages/TheActivities.vue';
 import TheProgress from '@/pages/TheProgress.vue';
 import TheTimeline from '@/pages/TheTimeline.vue';
 
-import {
-  NAV_ITEMS,
-  PAGE_ACTIVITIES,
-  PAGE_PROGRESS,
-  PAGE_TIMELINE,
-} from '@/constants/page.constants';
+import { PageName } from '@/types/navigation.types';
 
-type TRoutes = Record<string, Component>;
+import { NAV_ITEMS } from '@/constants/page.constants';
 
-export const currentPage = ref<string>(normalizePageHash());
+export const currentPage = ref<PageName>(normalizePageHash());
 
-export const routes: TRoutes = {
-  [PAGE_TIMELINE]: TheTimeline,
-  [PAGE_ACTIVITIES]: TheActivities,
-  [PAGE_PROGRESS]: TheProgress,
+export const routes: Record<PageName, Component> = {
+  [PageName.PAGE_TIMELINE]: TheTimeline,
+  [PageName.PAGE_ACTIVITIES]: TheActivities,
+  [PageName.PAGE_PROGRESS]: TheProgress,
 };
 
-export function navigate(page: string): void {
+export function navigate(page: PageName): void {
   document.body.scrollIntoView({ behavior: 'instant' });
 
   currentPage.value = page;
 }
 
-function normalizePageHash(): string {
+function normalizePageHash(): PageName {
   const hash = window.location.hash.slice(1);
 
-  if (NAV_ITEMS.some((item) => item.page === hash)) return hash;
+  if (NAV_ITEMS.some((item): boolean => item.page === hash)) return hash as PageName;
 
-  window.location.hash = PAGE_TIMELINE;
-  return PAGE_TIMELINE;
+  window.location.hash = PageName.PAGE_TIMELINE;
+  return PageName.PAGE_TIMELINE;
 }

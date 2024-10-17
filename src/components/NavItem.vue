@@ -7,23 +7,23 @@ import { currentPage, navigate } from '@/router/router';
 
 import { scrollToCurrentHour } from '@/utils/timeline.utils';
 
-import type { TNavItem } from '@/types/navigation.types';
-
-import { PAGE_TIMELINE } from '@/constants/page.constants';
+import { PageName, type TNavItem } from '@/types/navigation.types';
 
 const props = defineProps<{ navItem: TNavItem }>();
 
-const classes = computed(() => [
-  'flex flex-col items-center p-2 text-xs capitalize ',
-  props.navItem.page === currentPage.value ? 'bg-gray-200' : 'hover:bg-gray-100',
-  {
-    'pointer-events-none':
-      currentPage.value !== PAGE_TIMELINE && currentPage.value === props.navItem.page,
-  },
-]);
+const classes = computed<(string | { 'pointer-events-none': boolean })[]>(
+  (): (string | { 'pointer-events-none': boolean })[] => [
+    'flex flex-col items-center p-2 text-xs capitalize ',
+    props.navItem.page === currentPage.value ? 'bg-gray-200' : 'hover:bg-gray-100',
+    {
+      'pointer-events-none':
+        currentPage.value !== PageName.PAGE_TIMELINE && currentPage.value === props.navItem.page,
+    },
+  ],
+);
 
-function handleClick() {
-  props.navItem.page === PAGE_TIMELINE && currentPage.value === PAGE_TIMELINE
+function handleClick(): void {
+  props.navItem.page === PageName.PAGE_TIMELINE && currentPage.value === PageName.PAGE_TIMELINE
     ? scrollToCurrentHour(true)
     : navigate(props.navItem.page);
 }

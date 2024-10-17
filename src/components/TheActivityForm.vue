@@ -6,11 +6,11 @@ import BaseIcon from '@/components/BaseIcon.vue';
 
 import { createActivity } from '@/utils/activity.utils';
 
-import { IconNames } from '@/types/baseComponents.types';
+import { IconName } from '@/types/baseComponents.types';
 
 const activity = ref<string>('');
 
-async function handleSubmit() {
+async function handleSubmit(): Promise<void> {
   const newActivity = activity.value.trim();
   if (newActivity.length > 0) {
     createActivity(newActivity);
@@ -33,7 +33,7 @@ async function handleSubmit() {
       placeholder="Activity name"
     />
     <BaseButton :disabled="activity.trim() === ''">
-      <BaseIcon :name="IconNames.PLUS" />
+      <BaseIcon :name="IconName.PLUS" />
     </BaseButton>
   </form>
 </template>

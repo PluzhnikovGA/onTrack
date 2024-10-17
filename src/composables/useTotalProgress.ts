@@ -10,21 +10,19 @@ type TUseProgress = {
 };
 
 export function useTotalProgress(): TUseProgress {
-  const percentage: ComputedRef<number> = computed((): number =>
+  const percentage = computed<number>((): number =>
     calculateCompletionPercentage(totalTrackedSeconds.value),
   );
 
-  const totalTrackedSeconds: ComputedRef<number> = computed((): number => {
+  const totalTrackedSeconds = computed<number>((): number => {
     return trackedActivities.value
-      .map((activity) => Math.min(calculateTrackedActivitySeconds(activity.id)))
+      .map((activity): number => Math.min(calculateTrackedActivitySeconds(activity.id)))
       .reduce((total: number, seconds: number): number => {
         return total + seconds;
       }, 0);
   });
 
-  const colorClass: ComputedRef<string> = computed((): string =>
-    getProgressColorClass(percentage.value),
-  );
+  const colorClass = computed<string>((): string => getProgressColorClass(percentage.value));
 
   return {
     percentage,

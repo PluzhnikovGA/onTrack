@@ -1,21 +1,22 @@
-import { type ComputedRef, computed } from 'vue';
+import { computed } from 'vue';
 
 import type { TActivity } from '@/types/activity.types';
+import { ProgressColorClass } from '@/types/progress.types';
 
 import { HUNDRED_PERCENT, LOW_PERCENT, MEDIUM_PERCENT } from '@/constants/number.constants';
 
 import { trackedActivities } from './activity.utils';
 
-export function getProgressColorClass(percentage: number): string {
+export function getProgressColorClass(percentage: number): ProgressColorClass {
   switch (true) {
     case percentage < LOW_PERCENT:
-      return 'bg-red-500';
+      return ProgressColorClass.BG_RED_500;
     case percentage < MEDIUM_PERCENT:
-      return 'bg-yellow-500';
+      return ProgressColorClass.BG_YELLOW_500;
     case percentage < HUNDRED_PERCENT:
-      return 'bg-blue-500';
+      return ProgressColorClass.BG_BLUE_500;
     default:
-      return 'bg-green-500';
+      return ProgressColorClass.BG_GREEN_500;
   }
 }
 
@@ -30,7 +31,7 @@ export function calculateCompletionPercentage(totalTrackedSeconds: number): numb
   return Math.floor((totalTrackedSeconds * HUNDRED_PERCENT) / totalActivityToComplete.value);
 }
 
-const totalActivityToComplete: ComputedRef<number> = computed((): number => {
+const totalActivityToComplete = computed<number>((): number => {
   return trackedActivities.value
     .map(({ secondsToComplete }: Pick<TActivity, 'secondsToComplete'>): number => secondsToComplete)
     .reduce((total: number, seconds: number): number => total + seconds, 0);

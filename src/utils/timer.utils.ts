@@ -1,4 +1,4 @@
-import { type ComputedRef, type Ref, computed, ref } from 'vue';
+import { computed, ref } from 'vue';
 
 import { now, today } from '@/utils/time.utils';
 import { activeTimelineItem, updateTimelineItem } from '@/utils/timeline.utils';
@@ -11,22 +11,22 @@ import {
   SECONDS_IN_DAY,
 } from '@/constants/number.constants';
 
-const timelineItemTimer: Ref<number | null> = ref(null);
+const timelineItemTimer = ref<number | null>(null);
 
-export const secondsSinceMidnightInPercentage: ComputedRef<number> = computed(
+export const secondsSinceMidnightInPercentage = computed<number>(
   (): number => (HUNDRED_PERCENT * secondsSinceMidnight.value) / SECONDS_IN_DAY,
 );
 
-const midnight: ComputedRef<number> = computed((): number =>
-  new Date(now.value).setHours(0, 0, 0, 0),
-);
+const midnight = computed<number>((): number => new Date(now.value).setHours(0, 0, 0, 0));
 
-const secondsSinceMidnight: ComputedRef<number> = computed((): number => {
+const secondsSinceMidnight = computed<number>((): number => {
   return (now.value.getTime() - midnight.value) / MILLISECONDS_IN_SECONDS;
 });
 
 export function startCurrentDateTimer(): void {
-  setInterval(() => (now.value = today()), MILLISECONDS_IN_SECONDS);
+  setInterval((): void => {
+    now.value = today();
+  }, MILLISECONDS_IN_SECONDS);
 }
 
 export function startTimelineItemTimer(timelineItem?: TTimelineItem): void {
@@ -36,7 +36,7 @@ export function startTimelineItemTimer(timelineItem?: TTimelineItem): void {
 
   updateTimelineItem(timelineItem, { isActive: true });
 
-  timelineItemTimer.value = setInterval(() => {
+  timelineItemTimer.value = setInterval((): void => {
     updateTimelineItem(timelineItem, {
       activitySeconds: timelineItem.activitySeconds + 1,
     });

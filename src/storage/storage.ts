@@ -8,7 +8,7 @@ import type { TTimelineItem } from '@/types/timeline.types';
 
 import { APP_NAME } from '@/constants/page.constants';
 
-export type TData = {
+export type TState = {
   timelineItems: TTimelineItem[];
   activities: TActivity[];
   lastActiveAt: Date;
@@ -23,7 +23,7 @@ export function syncState(shouldLoad: boolean = true): void {
 }
 
 function saveState(): void {
-  const state: TData = {
+  const state: TState = {
     timelineItems: timelineItems.value,
     activities: activities.value,
     lastActiveAt: today(),
@@ -33,13 +33,13 @@ function saveState(): void {
 }
 
 function loadState(): void {
-  const state: TData = loadFromLocalStorage();
+  const state: TState = loadFromLocalStorage();
 
   initializeActivities(state);
 
   initializeTimelineItems(state);
 }
 
-function loadFromLocalStorage(): TData {
+function loadFromLocalStorage(): TState {
   return JSON.parse(localStorage.getItem(APP_NAME) ?? '{}');
 }

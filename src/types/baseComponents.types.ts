@@ -8,14 +8,14 @@ export enum ButtonColor {
   DANGER = 'bg-red-500 enabled:hover:bg-red-600 text-white',
 }
 
-export type TOption = {
-  value: number | string;
+export type TSelectOption<T> = {
+  value: T;
   label: string;
 };
 
 export type TIcons = Record<string, Component>;
 
-export enum IconNames {
+export enum IconName {
   ARROW_PATH = 'ArrowPath',
   CHECK_CIRCLE = 'CheckCircle',
   PAUSE = 'Pause',

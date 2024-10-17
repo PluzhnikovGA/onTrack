@@ -1,22 +1,23 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends number | string">
 import BaseButton from '@/components/BaseButton.vue';
 import BaseIcon from '@/components/BaseIcon.vue';
 
-import { ButtonColor, IconNames, type TOption } from '@/types/baseComponents.types';
+import { ButtonColor, IconName, type TSelectOption } from '@/types/baseComponents.types';
 
 defineProps<{
-  selected: string | number | null;
-  options: TOption[];
+  selected: T | null;
+  options: TSelectOption<T>[];
   placeholder: string;
 }>();
 
 const emit = defineEmits<{
-  (e: 'select', value: string | number | null): void;
+  select: [value: T | null];
 }>();
 
 function changeValue(event: Event): void {
   const target = event.target as HTMLSelectElement;
-  emit('select', target.value);
+  console.log('111', target.value);
+  emit('select', target.value as T);
 }
 
 function defaultValue(): void {
@@ -27,7 +28,7 @@ function defaultValue(): void {
 <template>
   <div class="flex gap-2">
     <BaseButton @click="defaultValue" :color="ButtonColor.NEUTRAL">
-      <BaseIcon :name="IconNames.X_MARK" />
+      <BaseIcon :name="IconName.X_MARK" />
     </BaseButton>
     <select class="w-full truncate rounded bg-gray-100 px-2 py-1 text-2xl" @change="changeValue">
       <option :selected="selected === null" disabled value="">{{ placeholder }}</option>

@@ -10,7 +10,7 @@ import {
   stopTimelineItemTimer,
 } from '@/utils/timer.utils';
 
-import { ButtonColor, IconNames } from '@/types/baseComponents.types';
+import { ButtonColor, IconName } from '@/types/baseComponents.types';
 import type { TTimelineItem } from '@/types/timeline.types';
 
 defineProps<{
@@ -24,7 +24,7 @@ defineProps<{
       :color="ButtonColor.DANGER"
       @click="($event) => resetTimelineItemTimer(timelineItem)"
       :disabled="!timelineItem.activityId"
-      ><BaseIcon :name="IconNames.ARROW_PATH"
+      ><BaseIcon :name="IconName.ARROW_PATH"
     /></BaseButton>
     <div class="flex flex-grow items-center rounded bg-gray-100 px-2 font-mono text-3xl">
       {{ formatSeconds(timelineItem.activitySeconds) }}
@@ -33,14 +33,14 @@ defineProps<{
       v-if="timelineItem === activeTimelineItem"
       :color="ButtonColor.WARNING"
       @click="stopTimelineItemTimer"
-      ><BaseIcon :name="IconNames.PAUSE"
+      ><BaseIcon :name="IconName.PAUSE"
     /></BaseButton>
     <BaseButton
       v-else
       :color="ButtonColor.SUCCESS"
       @click="($event) => startTimelineItemTimer(timelineItem)"
       :disabled="timelineItem.hour !== now.getHours()"
-      ><BaseIcon :name="IconNames.PLAY"
+      ><BaseIcon :name="IconName.PLAY"
     /></BaseButton>
   </div>
 </template>

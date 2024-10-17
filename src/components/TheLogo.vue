@@ -3,15 +3,17 @@ import { currentPage, navigate } from '@/router/router';
 
 import { scrollToCurrentHour } from '@/utils/timeline.utils';
 
-import { PAGE_TIMELINE } from '@/constants/page.constants';
+import { PageName } from '@/types/navigation.types';
 
-function handleClick() {
-  currentPage.value === PAGE_TIMELINE ? scrollToCurrentHour(true) : navigate(PAGE_TIMELINE);
+function handleClick(): void {
+  currentPage.value === PageName.PAGE_TIMELINE
+    ? scrollToCurrentHour(true)
+    : navigate(PageName.PAGE_TIMELINE);
 }
 </script>
 
 <template>
-  <a :href="`#${PAGE_TIMELINE}`" @click="handleClick"
+  <a :href="`#${PageName.PAGE_TIMELINE}`" @click="handleClick"
     ><img src="@/assets/image/logo.png" alt="Logo" class="h-9"
   /></a>
 </template>

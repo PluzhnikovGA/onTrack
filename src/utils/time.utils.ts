@@ -1,6 +1,6 @@
-import { type Ref, ref } from 'vue';
+import { ref } from 'vue';
 
-import type { TOption } from '@/types/baseComponents.types';
+import type { TSelectOption } from '@/types/baseComponents.types';
 
 import {
   MILLISECONDS_IN_SECONDS,
@@ -9,7 +9,7 @@ import {
   SECONDS_IN_MINUTE,
 } from '@/constants/number.constants';
 
-export const now: Ref<Date> = ref(today());
+export const now = ref<Date>(today());
 
 export function isToday(date: Date): boolean {
   return today().toDateString() === date.toDateString();
@@ -33,15 +33,17 @@ export function formatSeconds(seconds: number): string {
   return utc.substring(utc.indexOf(':') - 2, utc.indexOf(':') + 6);
 }
 
-export function generatePeriodSelectOptions(): TOption[] {
-  const periodsInMinutes = [
+export function generatePeriodSelectOptions(): TSelectOption<number>[] {
+  const periodsInMinutes: number[] = [
     15, 30, 45, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360, 390, 420, 450, 480,
   ];
 
-  return periodsInMinutes.map((periodInMinutes) => ({
-    value: periodInMinutes * SECONDS_IN_MINUTE,
-    label: generatePeriodSelectOptionsLabel(periodInMinutes),
-  }));
+  return periodsInMinutes.map(
+    (periodInMinutes): TSelectOption<number> => ({
+      value: periodInMinutes * SECONDS_IN_MINUTE,
+      label: generatePeriodSelectOptionsLabel(periodInMinutes),
+    }),
+  );
 }
 
 export function endOfHour(date: Date): Date {

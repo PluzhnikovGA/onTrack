@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { IconNames } from '@/types/baseComponents.types';
+import type { IconName } from '@/types/baseComponents.types';
 
 import { ICONS } from '@/constants/icons.constants';
 
 defineProps<{
-  name: IconNames;
+  name: IconName;
 }>();
 </script>
 

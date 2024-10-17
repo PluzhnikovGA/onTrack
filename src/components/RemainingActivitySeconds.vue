@@ -10,11 +10,12 @@ const props = defineProps<{
   activity: TActivity;
 }>();
 
-const remainingSeconds = computed(
-  () => calculateTrackedActivitySeconds(props.activity.id) - props.activity.secondsToComplete,
+const remainingSeconds = computed<number>(
+  (): number =>
+    calculateTrackedActivitySeconds(props.activity.id) - props.activity.secondsToComplete,
 );
 
-const classes = computed(() => [
+const classes = computed<string[]>((): string[] => [
   `flex items-center rounded px-2 font-mono text-xl`,
   remainingSeconds.value < 0 ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600',
 ]);

@@ -11,17 +11,17 @@ import {
   XMarkIcon as XMark,
 } from '@heroicons/vue/24/outline';
 
-import { IconNames, type TIcons } from '@/types/baseComponents.types';
+import { IconName, type TIcons } from '@/types/baseComponents.types';
 
 export const ICONS: TIcons = {
-  [IconNames.ARROW_PATH]: ArrowPath,
-  [IconNames.CHECK_CIRCLE]: CheckCircle,
-  [IconNames.PAUSE]: Pause,
-  [IconNames.PLAY]: Play,
-  [IconNames.PLUS]: Plus,
-  [IconNames.TRASH]: Trash,
-  [IconNames.X_MARK]: XMark,
-  [IconNames.CHART_BAR]: ChartBar,
-  [IconNames.CLOCK]: Clock,
-  [IconNames.LIST_BULLET]: ListBullet,
+  [IconName.ARROW_PATH]: ArrowPath,
+  [IconName.CHECK_CIRCLE]: CheckCircle,
+  [IconName.PAUSE]: Pause,
+  [IconName.PLAY]: Play,
+  [IconName.PLUS]: Plus,
+  [IconName.TRASH]: Trash,
+  [IconName.X_MARK]: XMark,
+  [IconName.CHART_BAR]: ChartBar,
+  [IconName.CLOCK]: Clock,
+  [IconName.LIST_BULLET]: ListBullet,
 };

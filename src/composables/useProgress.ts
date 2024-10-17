@@ -15,17 +15,15 @@ type TUseProgress = {
 };
 
 export function useProgress(activity: TActivity): TUseProgress {
-  const trackedActivitySeconds: ComputedRef<number> = computed((): number =>
+  const trackedActivitySeconds = computed<number>((): number =>
     calculateTrackedActivitySeconds(activity.id),
   );
 
-  const percentage: ComputedRef<number> = computed((): number =>
+  const percentage = computed<number>((): number =>
     calculateActivityCompletionPercentage(activity.secondsToComplete, trackedActivitySeconds.value),
   );
 
-  const colorClass: ComputedRef<string> = computed((): string =>
-    getProgressColorClass(percentage.value),
-  );
+  const colorClass = computed<string>((): string => getProgressColorClass(percentage.value));
 
   return {
     percentage,

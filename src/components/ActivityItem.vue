@@ -9,23 +9,21 @@ import { generatePeriodSelectOptions } from '@/utils/time.utils';
 import { resetTimelineItemActivities } from '@/utils/timeline.utils';
 
 import type { TActivity } from '@/types/activity.types';
-import { ButtonColor, IconNames } from '@/types/baseComponents.types';
+import { ButtonColor, IconName, type TSelectOption } from '@/types/baseComponents.types';
 
 const props = defineProps<{
   activity: TActivity;
 }>();
 
-const periodSelectOptions = generatePeriodSelectOptions();
+const periodSelectOptions: TSelectOption<number>[] = generatePeriodSelectOptions();
 
 function handleDelete(): void {
   resetTimelineItemActivities(props.activity.id);
   deleteActivity(props.activity.id);
 }
 
-function updateSeconds(seconds: string | number | null): void {
-  const parsedSeconds = Number(seconds);
-
-  updateActivity(props.activity, { secondsToComplete: isNaN(parsedSeconds) ? 0 : parsedSeconds });
+function updateSeconds(seconds: number | null): void {
+  updateActivity(props.activity, { secondsToComplete: seconds ? seconds : 0 });
 }
 </script>
 
@@ -33,7 +31,7 @@ function updateSeconds(seconds: string | number | null): void {
   <li class="flex flex-col gap-2 p-4">
     <div class="flex items-center gap-2">
       <BaseButton :color="ButtonColor.DANGER" @click="handleDelete">
-        <BaseIcon :name="IconNames.TRASH" />
+        <BaseIcon :name="IconName.TRASH" />
       </BaseButton>
       <span class="truncate text-xl">{{ activity.name }}</span>
     </div>
