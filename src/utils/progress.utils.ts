@@ -31,7 +31,7 @@ export function calculateCompletionPercentage(totalTrackedSeconds: number): numb
   return Math.floor((totalTrackedSeconds * HUNDRED_PERCENT) / totalActivityToComplete.value);
 }
 
-const totalActivityToComplete = computed<number>((): number => {
+export const totalActivityToComplete = computed<number>((): number => {
   return trackedActivities.value
     .map(({ secondsToComplete }: Pick<TActivity, 'secondsToComplete'>): number => secondsToComplete)
     .reduce((total: number, seconds: number): number => total + seconds, 0);

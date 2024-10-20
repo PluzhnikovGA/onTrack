@@ -4,62 +4,94 @@ import {
   HUNDRED_PERCENT,
   LOW_PERCENT,
   MEDIUM_PERCENT,
+  SECONDS_IN_HOUR,
 } from '../../../src/constants/number.constants';
+import { TActivity } from '../../../src/types/activity.types';
 import { ProgressColorClass } from '../../../src/types/progress.types';
+import { activities } from '../../../src/utils/activity.utils';
 import {
   calculateActivityCompletionPercentage,
+  calculateCompletionPercentage,
   getProgressColorClass,
+  totalActivityToComplete,
 } from '../../../src/utils/progress.utils';
 
+const TRAINING_ACTIVITY_ID = '4rhjfhd7';
+const READING_ACTIVITY_ID = 'cvkfjdh54d';
+
+function createActivity(id: string, name: string, secondsToComplete: number): TActivity {
+  return {
+    id,
+    name,
+    secondsToComplete,
+  };
+}
+
 describe('getProgressColorClass', () => {
-  it('should return red color', () => {
-    expect(getProgressColorClass(0)).toBe(ProgressColorClass.BG_RED);
-    expect(getProgressColorClass(LOW_PERCENT - 1)).toBe(ProgressColorClass.BG_RED);
-  });
+  const testCases = [
+    { percent: 0, color: ProgressColorClass.BG_RED },
+    { percent: LOW_PERCENT - 1, color: ProgressColorClass.BG_RED },
+    { percent: LOW_PERCENT, color: ProgressColorClass.BG_YELLOW },
+    { percent: MEDIUM_PERCENT - 1, color: ProgressColorClass.BG_YELLOW },
+    { percent: MEDIUM_PERCENT, color: ProgressColorClass.BG_BLUE },
+    { percent: HUNDRED_PERCENT - 1, color: ProgressColorClass.BG_BLUE },
+    { percent: HUNDRED_PERCENT, color: ProgressColorClass.BG_GREEN },
+  ];
 
-  it('should return yellow color', () => {
-    expect(getProgressColorClass(LOW_PERCENT)).toBe(ProgressColorClass.BG_YELLOW);
-    expect(getProgressColorClass(MEDIUM_PERCENT - 1)).toBe(ProgressColorClass.BG_YELLOW);
-  });
-
-  it('should return blue color', () => {
-    expect(getProgressColorClass(MEDIUM_PERCENT)).toBe(ProgressColorClass.BG_BLUE);
-    expect(getProgressColorClass(HUNDRED_PERCENT - 1)).toBe(ProgressColorClass.BG_BLUE);
-  });
-
-  it('should return green color', () => {
-    expect(getProgressColorClass(HUNDRED_PERCENT)).toBe(ProgressColorClass.BG_GREEN);
+  it.each(testCases)('should return $color for $percent', ({ percent, color }) => {
+    expect(getProgressColorClass(percent)).toBe(color);
   });
 });
 
 describe('calculateActivityCompletionPercentage', () => {
   const secondsToComplete: number = 200;
+  const testCases = [
+    { trackedSeconds: 0, percent: 0 },
+    { trackedSeconds: 100, percent: 50 },
+    { trackedSeconds: 200, percent: 100 },
+  ];
 
-  it('should return corrected calculated percentage', () => {
-    const trackedSeconds: number = 100;
-
-    const result: number = calculateActivityCompletionPercentage(secondsToComplete, trackedSeconds);
-
-    expect(result).toBe(50);
-  });
-
-  it("should return 0, if it don't have values", () => {
-    const trackedSeconds: number = 0;
-
-    const result: number = calculateActivityCompletionPercentage(secondsToComplete, trackedSeconds);
-
-    expect(result).toBe(0);
-  });
-
-  it('should return 100, if all activities completed', () => {
-    const trackedSeconds: number = 200;
-
-    const result: number = calculateActivityCompletionPercentage(secondsToComplete, trackedSeconds);
-
-    expect(result).toBe(100);
-  });
+  it.each(testCases)(
+    'should return $percent percents for $trackedSeconds trackedSeconds',
+    ({ trackedSeconds, percent }) => {
+      expect(calculateActivityCompletionPercentage(secondsToComplete, trackedSeconds)).toBe(
+        percent,
+      );
+    },
+  );
 });
 
-it.todo('calculateCompletionPercentage');
+describe('calculateCompletionPercentage', () => {
+  const testCases = [
+    { totalTrackedSeconds: 0, percent: 0 },
+    { totalTrackedSeconds: SECONDS_IN_HOUR * 1, percent: 16 },
+    { totalTrackedSeconds: SECONDS_IN_HOUR * 2, percent: 33 },
+    { totalTrackedSeconds: SECONDS_IN_HOUR * 3, percent: 50 },
+    { totalTrackedSeconds: SECONDS_IN_HOUR * 4, percent: 66 },
+    { totalTrackedSeconds: SECONDS_IN_HOUR * 5, percent: 83 },
+    { totalTrackedSeconds: SECONDS_IN_HOUR * 6, percent: 100 },
+  ];
 
-it.todo('totalActivityToComplete');
+  activities.value = [
+    createActivity(TRAINING_ACTIVITY_ID, 'Training', SECONDS_IN_HOUR * 2),
+    createActivity(READING_ACTIVITY_ID, 'Reading', SECONDS_IN_HOUR * 4),
+  ];
+
+  it.each(testCases)(
+    'should return $percent completion percentage for $totalTrackedSeconds total tracked seconds',
+    ({ totalTrackedSeconds, percent }) => {
+      expect(calculateCompletionPercentage(totalTrackedSeconds)).toBe(percent);
+    },
+  );
+});
+
+describe('totalActivityToComplete', () => {
+  it('should return the correct total seconds of all seconds to complete all activities', () => {
+    activities.value = [
+      createActivity(TRAINING_ACTIVITY_ID, 'Training', SECONDS_IN_HOUR * 2),
+      createActivity(READING_ACTIVITY_ID, 'Reading', SECONDS_IN_HOUR * 4),
+    ];
+
+    expect(totalActivityToComplete.value).toBe(21600);
+  });
+});

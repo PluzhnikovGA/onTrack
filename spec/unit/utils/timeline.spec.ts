@@ -191,13 +191,14 @@ describe('calculateIdleSeconds', () => {
     { mockTime: new Date(2024, 0, 1, 15, 35), expected: 1800 },
   ];
 
-  testCases.forEach(({ mockTime, expected }) => {
-    it(`should return ${expected} seconds when lastActiveAt was at ${lastActiveAt.toTimeString().split(' ')[0]}, and after opened app in ${mockTime.toTimeString().split(' ')[0]}`, () => {
+  it.each(testCases)(
+    `should return $expected seconds when lastActiveAt was at ${lastActiveAt.toISOString()}, and after opened app in $mockTime`,
+    ({ mockTime, expected }) => {
       vi.useFakeTimers().setSystemTime(mockTime);
       expect(calculateIdleSeconds(lastActiveAt)).toBe(expected);
       vi.useRealTimers();
-    });
-  });
+    },
+  );
 });
 
 describe('resetTimelineItems', () => {
