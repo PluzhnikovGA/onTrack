@@ -16,7 +16,6 @@ const emit = defineEmits<{
 
 function changeValue(event: Event): void {
   const target = event.target as HTMLSelectElement;
-  console.log('111', target.value);
   emit('select', target.value as T);
 }
 

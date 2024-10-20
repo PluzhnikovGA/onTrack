@@ -5,6 +5,7 @@ import type { TSelectOption } from '@/types/baseComponents.types';
 import {
   MILLISECONDS_IN_SECONDS,
   MINUTES_IN_HOUR,
+  PERIOD_IN_MINUTES,
   SECONDS_IN_HOUR,
   SECONDS_IN_MINUTE,
 } from '@/constants/number.constants';
@@ -34,11 +35,7 @@ export function formatSeconds(seconds: number): string {
 }
 
 export function generatePeriodSelectOptions(): TSelectOption<number>[] {
-  const periodsInMinutes: number[] = [
-    15, 30, 45, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360, 390, 420, 450, 480,
-  ];
-
-  return periodsInMinutes.map(
+  return PERIOD_IN_MINUTES.map(
     (periodInMinutes): TSelectOption<number> => ({
       value: periodInMinutes * SECONDS_IN_MINUTE,
       label: generatePeriodSelectOptionsLabel(periodInMinutes),

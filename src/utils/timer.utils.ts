@@ -24,6 +24,7 @@ const secondsSinceMidnight = computed<number>((): number => {
 });
 
 export function startCurrentDateTimer(): void {
+  console.log('2');
   setInterval((): void => {
     now.value = today();
   }, MILLISECONDS_IN_SECONDS);
@@ -44,6 +45,7 @@ export function startTimelineItemTimer(timelineItem?: TTimelineItem): void {
 }
 
 export function stopTimelineItemTimer(): void {
+  console.log('1');
   if (timelineItemTimer.value !== null && activeTimelineItem.value) {
     updateTimelineItem(activeTimelineItem.value, { isActive: false });
 

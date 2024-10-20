@@ -1,13 +1,15 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  HUNDRED_PERCENT,
+  LOW_PERCENT,
+  MEDIUM_PERCENT,
+} from '../../../src/constants/number.constants';
+import { ProgressColorClass } from '../../../src/types/progress.types';
+import {
   calculateActivityCompletionPercentage,
   getProgressColorClass,
-} from '@/utils/progress.utils';
-
-import { ProgressColorClass } from '@/types/progress.types';
-
-import { HUNDRED_PERCENT, LOW_PERCENT, MEDIUM_PERCENT } from '@/constants/number.constants';
+} from '../../../src/utils/progress.utils';
 
 describe('getProgressColorClass', () => {
   it('should return red color', () => {
@@ -31,8 +33,9 @@ describe('getProgressColorClass', () => {
 });
 
 describe('calculateActivityCompletionPercentage', () => {
+  const secondsToComplete: number = 200;
+
   it('should return corrected calculated percentage', () => {
-    const secondsToComplete: number = 200;
     const trackedSeconds: number = 100;
 
     const result: number = calculateActivityCompletionPercentage(secondsToComplete, trackedSeconds);
@@ -41,7 +44,6 @@ describe('calculateActivityCompletionPercentage', () => {
   });
 
   it("should return 0, if it don't have values", () => {
-    const secondsToComplete: number = 200;
     const trackedSeconds: number = 0;
 
     const result: number = calculateActivityCompletionPercentage(secondsToComplete, trackedSeconds);
@@ -50,7 +52,6 @@ describe('calculateActivityCompletionPercentage', () => {
   });
 
   it('should return 100, if all activities completed', () => {
-    const secondsToComplete: number = 200;
     const trackedSeconds: number = 200;
 
     const result: number = calculateActivityCompletionPercentage(secondsToComplete, trackedSeconds);

@@ -9,3 +9,7 @@ export const SECONDS_IN_DAY = SECONDS_IN_HOUR * HOURS_IN_DAY;
 export const LOW_PERCENT = 33;
 export const MEDIUM_PERCENT = 66;
 export const HUNDRED_PERCENT = 100;
+
+export const PERIOD_IN_MINUTES: number[] = [
+  15, 30, 45, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360, 390, 420, 450, 480,
+];

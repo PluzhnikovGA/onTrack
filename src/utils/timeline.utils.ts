@@ -74,7 +74,7 @@ export function initializeTimelineItems(state: TState): void {
   }
 }
 
-function generateTimelineItems(): TTimelineItem[] {
+export function generateTimelineItems(): TTimelineItem[] {
   return Array.from({ length: HOURS_IN_DAY }, (_, hour) => ({
     hour,
     activityId: null,
@@ -87,7 +87,7 @@ export function filterTimelineItemsByActivityId(id: string): TTimelineItem[] {
   return timelineItems.value.filter(({ activityId }: Partial<TTimelineItem>) => activityId === id);
 }
 
-function syncIdleSeconds(lastActiveAt: Date): void {
+export function syncIdleSeconds(lastActiveAt: Date): void {
   if (activeTimelineItem.value) {
     updateTimelineItem(activeTimelineItem.value, {
       activitySeconds:
@@ -96,13 +96,13 @@ function syncIdleSeconds(lastActiveAt: Date): void {
   }
 }
 
-function calculateIdleSeconds(lastActiveAt: Date): number {
+export function calculateIdleSeconds(lastActiveAt: Date): number {
   return lastActiveAt.getHours() === today().getHours()
     ? toSeconds(today().getTime() - lastActiveAt.getTime())
     : toSeconds(endOfHour(lastActiveAt).getTime() - lastActiveAt.getTime());
 }
 
-function resetTimelineItems(): void {
+export function resetTimelineItems(): void {
   timelineItems.value.forEach(
     (timelineItem): TTimelineItem =>
       updateTimelineItem(timelineItem, {

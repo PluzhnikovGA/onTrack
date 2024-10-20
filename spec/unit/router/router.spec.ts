@@ -1,9 +1,8 @@
 // @vitest-environment happy-dom
 import { describe, expect, it } from 'vitest';
 
-import { normalizePageHash } from '@/router/router';
-
-import { PageName } from '@/types/navigation.types';
+import { normalizePageHash } from '../../../src/router/router';
+import { PageName } from '../../../src/types/navigation.types';
 
 it.todo('navigate');
 describe('normalizePageHash', () => {
