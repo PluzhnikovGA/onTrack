@@ -1,10 +1,24 @@
 // @vitest-environment happy-dom
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
-import { normalizePageHash } from '../../../src/router/router';
+import { currentPage, navigate, normalizePageHash } from '../../../src/router/router';
 import { PageName } from '../../../src/types/navigation.types';
 
-it.todo('navigate');
+describe('navigate', () => {
+  const scrollIntoViewSpy = vi.spyOn(document.body, 'scrollIntoView');
+
+  const testCases = [
+    { page: PageName.TIMELINE },
+    { page: PageName.ACTIVITIES },
+    { page: PageName.PROGRESS },
+  ];
+
+  it.each(testCases)('should go to page $page', ({ page }) => {
+    navigate(page);
+    expect(currentPage.value).toBe(page);
+    expect(scrollIntoViewSpy).toHaveBeenCalledWith({ behavior: 'instant' });
+  });
+});
 describe('normalizePageHash', () => {
   it('normalize valid page hash', () => {
     Object.values(PageName).forEach((page: PageName): void => {

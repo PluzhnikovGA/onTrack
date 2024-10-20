@@ -16,7 +16,10 @@ export const activitySelectOptions = computed<TSelectOption<string>[]>(
 );
 
 export function createActivity(newActivity: string): void {
-  activities.value.push({ id: id(), name: newActivity, secondsToComplete: 0 });
+  const isActivityInList = activities.value.some((activity) => activity.name === newActivity);
+
+  if (!isActivityInList)
+    activities.value.push({ id: id(), name: newActivity, secondsToComplete: 0 });
 }
 
 export function updateActivity(activity: TActivity, fields: Partial<TActivity>): TActivity {
@@ -39,7 +42,9 @@ export function id(): string {
   return Date.now().toString(36) + Math.random().toString(36).substring(2);
 }
 
-function generateActivitySelectOptions(activities: Ref<TActivity[]>): TSelectOption<string>[] {
+export function generateActivitySelectOptions(
+  activities: Ref<TActivity[]>,
+): TSelectOption<string>[] {
   return activities.value.map(
     (activity): TSelectOption<string> => ({ value: activity.id, label: activity.name }),
   );

@@ -16,16 +16,16 @@ import {
   totalActivityToComplete,
 } from '../../../src/utils/progress.utils';
 
-const TRAINING_ACTIVITY_ID = '4rhjfhd7';
-const READING_ACTIVITY_ID = 'cvkfjdh54d';
-
-function createActivity(id: string, name: string, secondsToComplete: number): TActivity {
+function createActivityData(id: string, name: string, secondsToComplete: number): TActivity {
   return {
     id,
     name,
     secondsToComplete,
   };
 }
+
+const TRAINING_ACTIVITY_ID = '4rhjfhd7';
+const READING_ACTIVITY_ID = 'cvkfjdh54d';
 
 describe('getProgressColorClass', () => {
   const testCases = [
@@ -73,8 +73,8 @@ describe('calculateCompletionPercentage', () => {
   ];
 
   activities.value = [
-    createActivity(TRAINING_ACTIVITY_ID, 'Training', SECONDS_IN_HOUR * 2),
-    createActivity(READING_ACTIVITY_ID, 'Reading', SECONDS_IN_HOUR * 4),
+    createActivityData(TRAINING_ACTIVITY_ID, 'Training', SECONDS_IN_HOUR * 2),
+    createActivityData(READING_ACTIVITY_ID, 'Reading', SECONDS_IN_HOUR * 4),
   ];
 
   it.each(testCases)(
@@ -88,8 +88,8 @@ describe('calculateCompletionPercentage', () => {
 describe('totalActivityToComplete', () => {
   it('should return the correct total seconds of all seconds to complete all activities', () => {
     activities.value = [
-      createActivity(TRAINING_ACTIVITY_ID, 'Training', SECONDS_IN_HOUR * 2),
-      createActivity(READING_ACTIVITY_ID, 'Reading', SECONDS_IN_HOUR * 4),
+      createActivityData(TRAINING_ACTIVITY_ID, 'Training', SECONDS_IN_HOUR * 2),
+      createActivityData(READING_ACTIVITY_ID, 'Reading', SECONDS_IN_HOUR * 4),
     ];
 
     expect(totalActivityToComplete.value).toBe(21600);

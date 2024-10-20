@@ -45,6 +45,14 @@ function createTimelineItem(
   };
 }
 
+function setupMockState(
+  lastActiveAt: Date,
+  timelineItems: TTimelineItem[],
+  activities: TActivity[],
+): TState {
+  return { lastActiveAt, timelineItems, activities };
+}
+
 function createTimelineItems() {
   return [
     createTimelineItem(CURRENT_HOUR - 1, TRAINING_ACTIVITY_ID, SECONDS_IN_HOUR),
@@ -263,14 +271,6 @@ describe('filterTimelineItemsByActivityId', () => {
 });
 
 describe('initializeTimelineItems', () => {
-  function setupMockState(
-    lastActiveAt: Date,
-    timelineItems: TTimelineItem[],
-    activities: TActivity[],
-  ): TState {
-    return { lastActiveAt, timelineItems, activities };
-  }
-
   afterEach(() => {
     vi.useRealTimers();
   });

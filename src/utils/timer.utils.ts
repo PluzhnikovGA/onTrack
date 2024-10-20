@@ -11,7 +11,7 @@ import {
   SECONDS_IN_DAY,
 } from '@/constants/number.constants';
 
-const timelineItemTimer = ref<number | null>(null);
+export const timelineItemTimer = ref<number | null>(null);
 
 export const secondsSinceMidnightInPercentage = computed<number>(
   (): number => (HUNDRED_PERCENT * secondsSinceMidnight.value) / SECONDS_IN_DAY,
@@ -24,7 +24,6 @@ const secondsSinceMidnight = computed<number>((): number => {
 });
 
 export function startCurrentDateTimer(): void {
-  console.log('2');
   setInterval((): void => {
     now.value = today();
   }, MILLISECONDS_IN_SECONDS);
@@ -45,7 +44,6 @@ export function startTimelineItemTimer(timelineItem?: TTimelineItem): void {
 }
 
 export function stopTimelineItemTimer(): void {
-  console.log('1');
   if (timelineItemTimer.value !== null && activeTimelineItem.value) {
     updateTimelineItem(activeTimelineItem.value, { isActive: false });
 

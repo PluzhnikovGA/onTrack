@@ -22,7 +22,7 @@ export function syncState(shouldLoad: boolean = true): void {
   }
 }
 
-function saveState(): void {
+export function saveState(): void {
   const state: TState = {
     timelineItems: timelineItems.value,
     activities: activities.value,
@@ -32,7 +32,7 @@ function saveState(): void {
   localStorage.setItem(APP_NAME, JSON.stringify(state));
 }
 
-function loadState(): void {
+export function loadState(): void {
   const state: TState = loadFromLocalStorage();
 
   initializeActivities(state);
@@ -40,6 +40,6 @@ function loadState(): void {
   initializeTimelineItems(state);
 }
 
-function loadFromLocalStorage(): TState {
+export function loadFromLocalStorage(): TState {
   return JSON.parse(localStorage.getItem(APP_NAME) ?? '{}');
 }
